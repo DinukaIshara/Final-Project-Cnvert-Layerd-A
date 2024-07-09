@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootNode" prefHeight="890.0" prefWidth="1080.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.chama.controller.DashboardFormController">
+   <children>
+      <AnchorPane layoutX="32.0" layoutY="23.0" prefHeight="200.0" prefWidth="253.0" style="-fx-background-color: E7E7E7FF; -fx-background-radius: 20;" styleClass="shadow1" stylesheets="@../css/sidePane.css" AnchorPane.bottomAnchor="667.0" AnchorPane.topAnchor="23.0">
+         <children>
+            <Label layoutX="41.0" layoutY="108.0" text="Customer Count">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="labCutCount" layoutX="112.0" layoutY="141.0" prefHeight="31.0" prefWidth="5.0" text="o" textFill="#008fff">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="101.0" fitWidth="103.0" layoutX="76.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/customer.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="319.0" layoutY="23.0" prefHeight="200.0" prefWidth="253.0" style="-fx-background-color: E7E7E7FF; -fx-background-radius: 20;" styleClass="shadow1" stylesheets="@../css/sidePane.css" AnchorPane.bottomAnchor="667.0" AnchorPane.leftAnchor="319.0" AnchorPane.topAnchor="23.0">
+         <children>
+            <Label layoutX="62.0" layoutY="106.0" text="Order Count">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblOrderCount" layoutX="107.0" layoutY="139.0" prefHeight="31.0" prefWidth="49.0" text="0" textFill="#008fff">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="88.0" fitWidth="101.0" layoutX="82.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/order.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="607.0" layoutY="250.0" prefHeight="619.0" prefWidth="445.0" style="-fx-background-color: E7E7E7FF; -fx-background-radius: 20;" styleClass="shadow1" stylesheets="@../css/sidePane.css" AnchorPane.topAnchor="250.0">
+         <children>
+            <Label layoutX="85.0" layoutY="142.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Label>
+            <Label layoutX="70.0" layoutY="142.0" prefHeight="31.0" prefWidth="0.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Label>
+            <PieChart fx:id="pieChart" layoutX="20.0" layoutY="19.0" prefHeight="366.0" prefWidth="399.0" />
+            <Label layoutX="25.0" layoutY="15.0" text="Top 5 Items">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <TableView fx:id="tblMostSellItems" layoutX="625.0" layoutY="655.0" prefHeight="192.0" prefWidth="410.0" stylesheets="@../css/sidePane.css" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="625.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="655.0">
+        <columns>
+          <TableColumn fx:id="colItemName" prefWidth="227.0" text="Item Name" />
+          <TableColumn fx:id="colOrderCount" prefWidth="106.0" text="Order count" />
+            <TableColumn fx:id="colQty" prefWidth="71.0" text="QTY" />
+        </columns>
+      </TableView>
+      <BarChart fx:id="barChart" layoutX="22.0" layoutY="470.0" prefHeight="400.0" prefWidth="554.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </BarChart>
+      <AnchorPane layoutX="32.0" layoutY="250.0" prefHeight="200.0" prefWidth="543.0" style="-fx-background-color: E7E7E7FF; -fx-background-radius: 20;" styleClass="shadow1" stylesheets="@../css/sidePane.css">
+         <children>
+            <Pane layoutX="21.0" layoutY="24.0" prefHeight="58.0" prefWidth="253.0" style="-fx-background-color: white; -fx-background-radius: 50;">
+               <children>
+                  <TextField fx:id="txtOrderDate" layoutX="13.0" layoutY="8.0" onAction="#txtOrderDateOnAction" prefHeight="43.0" prefWidth="149.0" promptText="order date" style="-fx-background-color: transparent;" />
+                  <JFXButton layoutX="163.0" layoutY="14.0" onAction="#btnSearchOrderDateOnAction" prefHeight="31.0" prefWidth="77.0" style="-fx-background-radius: 20;" styleClass="sale" stylesheets="@../css/style.css" text="Search" textFill="WHITE" />
+               </children>
+            </Pane>
+            <Label layoutX="40.0" layoutY="107.0" text="Order Count">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblOrderCountlab" layoutX="88.0" layoutY="146.0" text="0" textFill="#0077ff">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="219.0" layoutY="107.0" text="Item Qty">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblItemQty" layoutX="251.0" layoutY="146.0" text="0" textFill="#0077ff">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="140.0" fitWidth="155.0" layoutX="358.0" layoutY="30.0">
+               <image>
+                  <Image url="@../image/order dayly.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="607.0" layoutY="23.0" prefHeight="200.0" prefWidth="445.0" style="-fx-background-color: E7E7E7FF; -fx-background-radius: 20;" styleClass="shadow1" stylesheets="@../css/sidePane.css">
+         <children>
+            <Label layoutX="33.0" layoutY="56.0" text="Monthly Income">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="txtMonthlyProfit" layoutX="75.0" layoutY="112.0" prefHeight="31.0" prefWidth="182.0" text="0" textFill="#008fff">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="200.0" fitWidth="203.0" layoutX="242.0">
+               <image>
+                  <Image url="@../icon/profit.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="39.0" layoutY="116.0" text="Rs.">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

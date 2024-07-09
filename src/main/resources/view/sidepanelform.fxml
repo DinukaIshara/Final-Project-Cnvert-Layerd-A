@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootNode" prefHeight="978.0" prefWidth="1416.0" style="-fx-background-color: #fff#008cfffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.chama.controller.SidepanelformController">
+   <children>
+      <AnchorPane fx:id="childRootNode" layoutX="325.0" layoutY="75.0" prefHeight="890.0" prefWidth="1080.0" style="-fx-background-color: EEEEEEFF; -fx-background-radius: 30;" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="325.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="75.0" />
+      <AnchorPane prefHeight="978.0" prefWidth="317.0" style="-fx-background-color: white;">
+         <children>
+            <JFXButton buttonType="RAISED" layoutX="25.0" layoutY="172.0" onAction="#btnDashboardOnAction" prefHeight="65.0" prefWidth="270.0" style="-fx-background-radius: 15;" styleClass="nav-btn" text="                Dashboard" textAlignment="RIGHT" textFill="WHITE" AnchorPane.leftAnchor="25.0">
+               <stylesheets>
+                  <URL value="@../css/sidePane.css" />
+                  <URL value="@../css/sidePane.css" />
+               </stylesheets>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="25.0" layoutY="252.0" onAction="#btnItemOnAction" prefHeight="65.0" prefWidth="270.0" style="-fx-background-radius: 15;" styleClass="nav-btn" text="       Item" textFill="WHITE" AnchorPane.leftAnchor="25.0">
+               <stylesheets>
+                  <URL value="@../css/sidePane.css" />
+                  <URL value="@../css/sidePane.css" />
+               </stylesheets>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="25.0" layoutY="332.0" onAction="#btnPlaceOrderOnAction" prefHeight="65.0" prefWidth="270.0" style="-fx-background-radius: 15;" styleClass="nav-btn" text="                  Place Order" textFill="WHITE" AnchorPane.leftAnchor="25.0">
+               <stylesheets>
+                  <URL value="@../css/sidePane.css" />
+                  <URL value="@../css/sidePane.css" />
+               </stylesheets>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="25.0" layoutY="413.0" onAction="#btnCustomerOnAction" prefHeight="65.0" prefWidth="270.0" style="-fx-background-radius: 15;" styleClass="nav-btn" text="               Customer" textFill="WHITE" AnchorPane.leftAnchor="25.0">
+               <stylesheets>
+                  <URL value="@../css/sidePane.css" />
+                  <URL value="@../css/sidePane.css" />
+               </stylesheets>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="25.0" layoutY="492.0" onAction="#btnSupplierOnAction" prefHeight="65.0" prefWidth="270.0" style="-fx-background-radius: 15;" styleClass="nav-btn" text="            Supplier" textFill="WHITE" AnchorPane.leftAnchor="25.0">
+               <stylesheets>
+                  <URL value="@../css/sidePane.css" />
+                  <URL value="@../css/sidePane.css" />
+               </stylesheets>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="25.0" layoutY="572.0" onAction="#btnEmployeeOnAction" prefHeight="65.0" prefWidth="270.0" style="-fx-background-radius: 15;" styleClass="nav-btn" text="               Employee" textFill="WHITE" AnchorPane.leftAnchor="25.0">
+               <stylesheets>
+                  <URL value="@../css/sidePane.css" />
+                  <URL value="@../css/sidePane.css" />
+               </stylesheets>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="25.0" layoutY="652.0" onAction="#btnRepairOnAction" prefHeight="65.0" prefWidth="270.0" style="-fx-background-radius: 15;" styleClass="nav-btn" text="         Repair" textFill="WHITE" AnchorPane.leftAnchor="25.0">
+               <stylesheets>
+                  <URL value="@../css/sidePane.css" />
+                  <URL value="@../css/sidePane.css" />
+               </stylesheets>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="25.0" layoutY="730.0" onAction="#btnTransportOnAction" prefHeight="65.0" prefWidth="270.0" style="-fx-background-radius: 15;" styleClass="nav-btn" text="               Transport" textFill="WHITE" AnchorPane.leftAnchor="25.0">
+               <stylesheets>
+                  <URL value="@../css/sidePane.css" />
+                  <URL value="@../css/sidePane.css" />
+               </stylesheets>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="25.0" layoutY="807.0" onAction="#btnReportOnAction" prefHeight="65.0" prefWidth="270.0" style="-fx-background-radius: 15;" styleClass="nav-btn" text="          Report" textFill="WHITE" AnchorPane.leftAnchor="25.0">
+               <stylesheets>
+                  <URL value="@../css/sidePane.css" />
+                  <URL value="@../css/sidePane.css" />
+               </stylesheets>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="25.0" layoutY="896.0" onAction="#btnLogOutOnAction" prefHeight="65.0" prefWidth="270.0" stylesheets="@../css/sidePane.css" text="           Log out" textFill="WHITE" AnchorPane.leftAnchor="25.0">
+               <styleClass>
+                  <String fx:value="logout" />
+                  <String fx:value="shadow" />
+               </styleClass>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </JFXButton>
+            <Pane layoutX="26.0" layoutY="12.0" prefHeight="145.0" prefWidth="270.0" style="-fx-background-color: black; -fx-background-radius: 20;" styleClass="shadow1" stylesheets="@../css/sidePane.css">
+               <children>
+                  <ImageView fitHeight="85.0" fitWidth="90.0" layoutX="16.0" layoutY="25.0">
+                     <image>
+                        <Image url="@../icon/icons8-user-96.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="104.0" layoutY="41.0" text="Welcome" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblUserName" layoutX="128.0" layoutY="70.0" prefHeight="30.0" prefWidth="123.0" text="Dinuka " textFill="#0090ff">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <ImageView fitHeight="42.0" fitWidth="37.0" layoutX="68.0" layoutY="186.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: shadow;">
+               <image>
+                  <Image url="@../icon/dashboard.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="71.0" layoutY="266.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: shadow;">
+               <image>
+                  <Image url="@../icon/item.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="70.0" layoutY="346.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: shadow;">
+               <image>
+                  <Image url="@../icon/order.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="68.0" layoutY="666.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: shadow;">
+               <image>
+                  <Image url="@../icon/repair.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="68.0" layoutY="587.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: shadow;">
+               <image>
+                  <Image url="@../icon/employee.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="67.0" layoutY="506.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: shadow;">
+               <image>
+                  <Image url="@../icon/supplier.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="67.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: shadow;">
+               <image>
+                  <Image url="@../icon/customer.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="71.0" layoutY="744.0" style="-fx-effect: shadow;">
+               <image>
+                  <Image url="@../icon/transport.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="69.0" layoutY="819.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: shadow;">
+               <image>
+                  <Image url="@../icon/report.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="72.0" layoutY="909.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/logout.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Label layoutX="1151.0" layoutY="51.0" text="Date :" textFill="#9e9e9e" AnchorPane.rightAnchor="203.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDate" layoutX="1231.0" layoutY="52.0" prefHeight="21.0" prefWidth="168.0" text="date" textFill="#008fff" AnchorPane.rightAnchor="17.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Pane layoutX="325.0" layoutY="9.0" prefHeight="37.0" prefWidth="1080.0" style="-fx-background-radius: 15; -fx-background-color: black;" AnchorPane.leftAnchor="325.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="9.0">
+         <children>
+            <ImageView fitHeight="21.0" fitWidth="116.0" layoutX="490.0" layoutY="9.0">
+               <image>
+                  <Image url="@../icon/chamalogo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootNode" prefHeight="890.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.chama.controller.BrandNewItemFormController">
+   <children>
+      <AnchorPane layoutX="26.0" layoutY="82.0" prefHeight="391.0" prefWidth="1032.0" style="-fx-background-color: #e8e8e8; -fx-background-radius: 20;" stylesheets="@../css/sidePane.css" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="82.0">
+         <children>
+            <TextField fx:id="txtQty" layoutX="587.0" layoutY="181.0" onAction="#txtQtyOnAction" onKeyReleased="#txtQtyOnKeyRelesed" prefHeight="28.0" prefWidth="60.0" styleClass="blue-box-text-field" stylesheets="@../css/sidePane.css" />
+            <Label layoutX="526.0" layoutY="183.0" prefHeight="21.0" prefWidth="48.0" text="Qty :">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtWaranty" layoutX="587.0" layoutY="129.0" onAction="#txtWarantyOnAction" prefHeight="28.0" prefWidth="60.0" styleClass="blue-box-text-field" stylesheets="@../css/sidePane.css" />
+            <Label layoutX="482.0" layoutY="131.0" prefHeight="21.0" prefWidth="95.0" text="Waranty :">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtUnitPrice" layoutX="587.0" layoutY="231.0" onAction="#txtUnitPriceOnAction" onKeyReleased="#txtUnitPriceOnKeyRelesed" prefHeight="28.0" prefWidth="124.0" styleClass="blue-box-text-field" stylesheets="@../css/sidePane.css" />
+            <Label layoutX="470.0" layoutY="234.0" prefHeight="21.0" prefWidth="104.0" text="Unit Price :">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="456.0" layoutY="80.0" prefHeight="21.0" prefWidth="124.0" text="Stock Date :">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="96.0" layoutY="26.0" prefHeight="21.0" prefWidth="84.0" text="Item ID :" AnchorPane.bottomAnchor="372.0" AnchorPane.leftAnchor="96.0" AnchorPane.rightAnchor="852.0" AnchorPane.topAnchor="26.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtItemId" layoutX="187.0" layoutY="23.0" onAction="#txtItemId" onKeyReleased="#txtitemIdOnKeyRelese" prefHeight="28.0" prefWidth="95.0" styleClass="blue-box-text-field" stylesheets="@../css/sidePane.css" AnchorPane.bottomAnchor="364.0" AnchorPane.leftAnchor="187.0" AnchorPane.rightAnchor="750.0" AnchorPane.topAnchor="23.0" />
+            <TextField fx:id="txtName" layoutX="187.0" layoutY="76.0" onAction="#txtNameOnAction" prefHeight="28.0" prefWidth="178.0" styleClass="blue-box-text-field" stylesheets="@../css/sidePane.css" />
+            <Label layoutX="57.0" layoutY="78.0" prefHeight="21.0" prefWidth="124.0" text="Item Name  :">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="33.0" layoutY="131.0" prefHeight="21.0" prefWidth="158.0" text="Item Category :">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtCategory" layoutX="187.0" layoutY="127.0" onAction="#txtCategoryOnAction" prefHeight="28.0" prefWidth="178.0" styleClass="blue-box-text-field" stylesheets="@../css/sidePane.css" />
+            <Label layoutX="107.0" layoutY="183.0" prefHeight="21.0" prefWidth="70.0" text="Brand :">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtBrand" layoutX="187.0" layoutY="179.0" onAction="#txtBrandOnAction" prefHeight="28.0" prefWidth="178.0" styleClass="blue-box-text-field" stylesheets="@../css/sidePane.css" />
+            <TextField fx:id="txtDescription" layoutX="186.0" layoutY="229.0" onAction="#txtDescriptionOnAction" prefHeight="32.0" prefWidth="272.0" styleClass="blue-box-text-field" stylesheets="@../css/sidePane.css" />
+            <Label layoutX="58.0" layoutY="231.0" prefHeight="21.0" prefWidth="124.0" text="Description :">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="61.0" layoutY="279.0" prefHeight="21.0" prefWidth="116.0" text="Supplier ID :">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtSupplierId" layoutX="187.0" layoutY="275.0" onAction="#txtSupplierIdOnAction" prefHeight="32.0" prefWidth="95.0" styleClass="blue-box-text-field" stylesheets="@../css/sidePane.css" />
+            <JFXButton buttonType="RAISED" layoutX="302.0" layoutY="272.0" onAction="#btnAddNewSupplierOnAction" prefHeight="38.0" prefWidth="77.0" styleClass="sale" stylesheets="@../css/style.css" text="+ New" textFill="WHITE" />
+            <Label layoutX="393.0" layoutY="276.0" prefHeight="21.0" prefWidth="178.0" text="Supplier Company :">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblSupCompanyName" layoutX="469.0" layoutY="307.0" prefHeight="21.0" prefWidth="178.0" textFill="#00a1ff">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <JFXButton buttonType="RAISED" layoutX="42.0" layoutY="347.0" onAction="#btnSaveItemOnAction" prefHeight="33.0" prefWidth="124.0" styleClass="sale" stylesheets="@../css/style.css" text="+ Save" textFill="WHITE" />
+            <JFXButton buttonType="RAISED" layoutX="217.0" layoutY="347.0" onAction="#btnUpdateItemOnAction" prefHeight="33.0" prefWidth="124.0" styleClass="sale" stylesheets="@../css/style.css" text="Update" textFill="WHITE" />
+            <JFXButton buttonType="RAISED" layoutX="396.0" layoutY="347.0" onAction="#btnDeleteItemOnAction" prefHeight="33.0" prefWidth="124.0" styleClass="sale" stylesheets="@../css/style.css" text="Delete" textFill="WHITE" />
+            <AnchorPane fx:id="imgRootNode" layoutX="795.0" layoutY="73.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
+               <children>
+                  <ImageView fx:id="itemImage" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" />
+               </children>
+            </AnchorPane>
+            <JFXButton buttonType="RAISED" layoutX="838.0" layoutY="291.0" onAction="#btnPicImportOnAction" prefHeight="33.0" prefWidth="124.0" styleClass="sale" stylesheets="@../css/style.css" text="Import" textFill="WHITE" />
+            <JFXButton buttonType="RAISED" layoutX="560.0" layoutY="347.0" onAction="#btnClearOnAction" prefHeight="33.0" prefWidth="124.0" styleClass="sale" stylesheets="@../css/style.css" text="Clear" textFill="WHITE" />
+            <Label layoutX="511.0" layoutY="29.0" prefHeight="21.0" prefWidth="70.0" text="Type :">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <JFXComboBox fx:id="cmbType" layoutX="584.0" layoutY="22.0" onAction="#cmbtypeOnAction" prefHeight="32.0" prefWidth="178.0" style="-fx-background-color: white;" styleClass="blue-text-Field" stylesheets="@../css/sidePane.css" unFocusColor="WHITE" />
+            <DatePicker fx:id="txtDate" layoutX="585.0" layoutY="72.0" onAction="#txtDateOnAction" prefHeight="32.0" prefWidth="178.0" styleClass="blue-text-Field" stylesheets="@../css/sidePane.css" />
+         </children></AnchorPane>
+      <TableView fx:id="tableBrandNewItem" layoutX="26.0" layoutY="568.0" prefHeight="288.0" prefWidth="1032.0" stylesheets="@../css/sidePane.css" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="568.0">
+         <columns>
+            <TableColumn fx:id="colItemId" prefWidth="75.0" text="Item ID" />
+            <TableColumn fx:id="colName" prefWidth="227.0" text="Item Name" />
+            <TableColumn fx:id="colCategory" prefWidth="152.0" text="Category" />
+            <TableColumn fx:id="colBrand" prefWidth="132.0" text="Brand" />
+            <TableColumn fx:id="colUnitPrice" prefWidth="152.0" text="Unit Price" />
+            <TableColumn fx:id="colQty" prefWidth="127.0" text="Qty.On Hand" />
+            <TableColumn fx:id="colSupCompany" prefWidth="165.0" text="Supplier Company" />
+         </columns>
+      </TableView>
+      <Label fx:id="lblSupCompany" layoutX="733.0" layoutY="272.0" prefHeight="16.0" prefWidth="2.0" />
+      <Label layoutX="432.0" layoutY="22.0" prefHeight="37.0" prefWidth="259.0" text="Item Management" textFill="#008cff">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Pane layoutX="26.0" layoutY="512.0" prefHeight="47.0" prefWidth="272.0" style="-fx-background-color: #e8e8e8; -fx-background-radius: 50;">
+         <children>
+            <TextField fx:id="txtSearchItemName" layoutX="14.0" layoutY="2.0" onAction="#txtSearchItemNameOnAction" prefHeight="43.0" prefWidth="165.0" promptText="Search Item" style="-fx-background-color: transparent;" />
+            <JFXButton layoutX="185.0" layoutY="8.0" onAction="#btnSearchItemNameOnAction" prefHeight="31.0" prefWidth="77.0" style="-fx-background-radius: 20;" styleClass="sale" stylesheets="@../css/style.css" text="Search" textFill="WHITE" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

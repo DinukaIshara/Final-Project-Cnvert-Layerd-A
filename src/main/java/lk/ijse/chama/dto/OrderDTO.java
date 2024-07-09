@@ -1,0 +1,19 @@
+package lk.ijse.chama.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.sql.Date;
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@ToString
+public class OrderDTO {
+    private String orderId;
+    private String customerId;
+    private String trId;
+    private Date date;
+    private String payment;
+}

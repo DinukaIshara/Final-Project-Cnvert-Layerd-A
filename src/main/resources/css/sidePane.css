@@ -1,0 +1,67 @@
+.nav-btn{
+    -fx-background-color: #e7e7e7;
+    -fx-border-color: #05bef3;
+    -fx-border-radius: 15px;
+    -fx-border-width: 4px;
+    -fx-cursor: hand;
+    -fx-text-fill: #5b5b5b;
+    -fx-background-radius: 50px;
+}
+.nav-btn:hover{
+    -fx-background-color: #05bef3;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 50px;
+}
+
+.logout{
+    -fx-background-color: #5e5e5e;
+    -fx-padding: 5px;
+    -fx-cursor: hand;
+    -fx-background-radius: 50px;
+}
+.logout:hover{
+    -fx-background-color: #a71931;
+}
+
+.shadow{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 5,0,0,0);
+}
+
+
+.table-view{
+    -fx-background-color: white;
+    -fx-padding: 0;
+    -fx-border-color: linear-gradient(to bottom right, #05bef3, #0081ff);
+    -fx-border-radius: 0px;
+    -fx-border-width: 1.5px;
+    -fx-text-alignment: center;
+}
+.table-view .column-header-background{
+    -fx-background-color: linear-gradient(to bottom right, #05bef3, #0081ff);
+    -fx-background-insets: 0 0 0 0;
+}
+.table-view .column-header, .filter{
+    -fx-background-color: transparent;
+    -fx-size: 40px;
+}
+.table-view .column-header .label{
+    -fx-text-fill: #fff;
+}
+
+.blue-text-Field{
+    -fx-border-radius: 5px;
+    -fx-background-color: #fff;
+    -fx-border-color: #05bef3;
+    -fx-border-width:  0px 0px 2px 0px;
+    -fx-font-family: Arial Rounded MT Bold;
+    -fx-font-size: 14px;
+}
+.blue-box-text-field{
+    -fx-background-radius: 5px;
+    -fx-border-color: #05bef3;
+    -fx-border-radius: 5px;
+    -fx-border-width:  2px;
+    -fx-text-fill: #000;
+    -fx-font-family: Arial Rounded MT Bold;
+    -fx-font-size: 14px;
+}
