@@ -4,7 +4,6 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import lk.ijse.chama.bo.custom.DashboardBO;
 import lk.ijse.chama.dao.DAOFactory;
-import lk.ijse.chama.dao.SQLUtill;
 import lk.ijse.chama.dao.custom.*;
 import lk.ijse.chama.dto.CustomDTO;
 import lk.ijse.chama.dto.CustomerDTO;
@@ -14,9 +13,7 @@ import lk.ijse.chama.entity.Custom;
 import lk.ijse.chama.entity.Customer;
 import lk.ijse.chama.entity.Item;
 import lk.ijse.chama.entity.Order;
-import lk.ijse.chama.entity.tm.MostSellItemTm;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;

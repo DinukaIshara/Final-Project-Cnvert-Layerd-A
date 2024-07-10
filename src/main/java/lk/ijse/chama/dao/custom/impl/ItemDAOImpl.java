@@ -2,7 +2,6 @@ package lk.ijse.chama.dao.custom.impl;
 
 import lk.ijse.chama.dao.SQLUtill;
 import lk.ijse.chama.dao.custom.ItemDAO;
-import lk.ijse.chama.db.DbConnection;
 import lk.ijse.chama.entity.Item;
 import lk.ijse.chama.entity.OrderDetail;
 
@@ -16,7 +15,7 @@ public class ItemDAOImpl implements ItemDAO {
     public ArrayList<Item> getAll() throws SQLException, ClassNotFoundException {
         ArrayList<Item> itemList;
         try {
-            ResultSet resultSet = SQLUtill.execute("SELECT * FROM item");//pstm.executeQuery();
+            ResultSet resultSet = SQLUtill.execute("SELECT * FROM item");
 
             itemList = new ArrayList<>();
 
@@ -54,7 +53,7 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public Item searchByName(String name) throws SQLException,ClassNotFoundException {
-        ResultSet resultSet = SQLUtill.execute("SELECT * FROM item WHERE name = ?",name);//pstm.executeQuery();
+        ResultSet resultSet = SQLUtill.execute("SELECT * FROM item WHERE name = ?",name);
         if(resultSet.next()) {
             return new Item(
                     resultSet.getString(1),
@@ -98,7 +97,7 @@ public class ItemDAOImpl implements ItemDAO {
 
         if (rst.next()) {
             String id = rst.getString("item_id");
-            String[] split = id.split("I");  //" ", "2"
+            String[] split = id.split("I");
             int idNum = Integer.parseInt(split[1]);
 
             if(idNum >= 0){
@@ -120,7 +119,7 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public Item search(String id) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = SQLUtill.execute("SELECT * FROM item WHERE item_id = ?",id);//pstm.executeQuery();
+        ResultSet resultSet = SQLUtill.execute("SELECT * FROM item WHERE item_id = ?",id);
         if(resultSet.next()) {
             return new Item(
                     resultSet.getString(1),

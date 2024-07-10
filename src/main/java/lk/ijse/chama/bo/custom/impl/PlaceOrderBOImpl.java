@@ -8,8 +8,6 @@ import lk.ijse.chama.dto.*;
 import lk.ijse.chama.entity.*;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,18 +52,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
 
     @Override
     public List<String> getlocation() throws SQLException,ClassNotFoundException {
-        String sql = "SELECT location FROM transport";
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-
-        List<String> locationList = new ArrayList<>();
-
-        ResultSet resultSet = pstm.executeQuery();
-        while (resultSet.next()) {
-            String location = resultSet.getString(1);
-            locationList.add(location);
-        }
-        return locationList;
+        return transportDAO.getlocation();
     }
 
     @Override

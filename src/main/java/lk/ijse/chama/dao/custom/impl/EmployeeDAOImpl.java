@@ -2,7 +2,6 @@ package lk.ijse.chama.dao.custom.impl;
 
 import lk.ijse.chama.dao.SQLUtill;
 import lk.ijse.chama.dao.custom.EmployeeDAO;
-import lk.ijse.chama.db.DbConnection;
 import lk.ijse.chama.entity.Employee;
 
 import java.sql.*;

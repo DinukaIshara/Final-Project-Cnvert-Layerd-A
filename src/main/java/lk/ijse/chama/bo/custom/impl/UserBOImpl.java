@@ -2,10 +2,8 @@ package lk.ijse.chama.bo.custom.impl;
 
 import lk.ijse.chama.bo.custom.UserBO;
 import lk.ijse.chama.dao.DAOFactory;
-import lk.ijse.chama.dao.SQLUtill;
 import lk.ijse.chama.dao.custom.UserDAO;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserBOImpl implements UserBO {

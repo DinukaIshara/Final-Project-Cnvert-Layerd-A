@@ -2,14 +2,11 @@ package lk.ijse.chama.dao.custom.impl;
 
 import lk.ijse.chama.dao.SQLUtill;
 import lk.ijse.chama.dao.custom.ItemSupplierDetailDAO;
-import lk.ijse.chama.db.DbConnection;
 import lk.ijse.chama.entity.ItemSupplierDetail;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ItemSupplierDAOImpl implements ItemSupplierDetailDAO {
     @Override
