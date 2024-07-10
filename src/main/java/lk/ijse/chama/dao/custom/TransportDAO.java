@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface TransportDAO extends CrudDAO<Transport> {
-    List<String> getlocation() throws SQLException ;
+    List<String> getlocation() throws SQLException,ClassNotFoundException ;
     Location searchByPath(String name) throws SQLException, ClassNotFoundException;
     List<String> getPlace() throws SQLException, ClassNotFoundException;
 }

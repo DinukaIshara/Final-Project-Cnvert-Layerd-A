@@ -1,23 +1,23 @@
 package lk.ijse.chama.dao.custom.impl;
 
+import javafx.scene.chart.XYChart;
+import lk.ijse.chama.dao.SQLUtill;
 import lk.ijse.chama.dao.custom.QueryDAO;
 import lk.ijse.chama.db.DbConnection;
+import lk.ijse.chama.entity.Custom;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class QueryDAOImpl implements QueryDAO {
     @Override
     public double getNetTot(String oId) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT SUM(od.qty * od.unit_price) AS net_total FROM orders o JOIN order_detail od ON o.order_id = od.order_id WHERE o.order_id = ? GROUP BY o.order_id;";
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-        System.out.println(oId);
-        pstm.setString(1, oId);
-
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtill.execute("SELECT SUM(od.qty * od.unit_price) AS net_total FROM orders o JOIN order_detail od ON o.order_id = od.order_id WHERE o.order_id = ? GROUP BY o.order_id",oId);//pstm.executeQuery();
         if(resultSet.next()) {
             double netTot = resultSet.getDouble(1);
             System.out.println(netTot);
@@ -44,11 +44,11 @@ public class QueryDAOImpl implements QueryDAO {
     }
 
     @Override
-    public ArrayList<String> getBarChart() throws SQLException {
-        String sql = "SELECT\n" +
-                "    DATE_FORMAT(MIN(o.order_date), '%Y-%m-%d') AS WeekStartDate,\n" +
-                "    DATE_FORMAT(MAX(o.order_date), '%Y-%m-%d') AS WeekEndDate,\n" +
-                "    COUNT(DISTINCT o.order_id) AS WeeklyOrders,\n" +
+    public ArrayList<Custom> getBarChart() throws SQLException,ClassNotFoundException {
+        ArrayList<Custom> dailyRevenueTmList = new ArrayList<>();
+
+        ResultSet rst = SQLUtill.execute("SELECT\n" +
+                "    DATE_FORMAT(o.order_date, '%Y-%m-%d') AS OrderDate,\n" +
                 "    SUM(od.qty * od.unit_price) AS TotalAmount\n" +
                 "FROM\n" +
                 "    orders o\n" +
@@ -57,21 +57,32 @@ public class QueryDAOImpl implements QueryDAO {
                 "WHERE\n" +
                 "    o.order_date BETWEEN (SELECT MIN(order_date) FROM orders) AND (SELECT MAX(order_date) FROM orders)\n" +
                 "GROUP BY\n" +
-                "    YEARWEEK(o.order_date, 1)\n" +
+                "    DATE_FORMAT(o.order_date, '%Y-%m-%d')\n" +
                 "ORDER BY\n" +
-                "    WeekStartDate;";
+                "    OrderDate");
 
-        PreparedStatement stm = DbConnection.getInstance().getConnection().prepareStatement(sql);
+        while (rst.next()) {
+            String date = rst.getString(1);
+            int count = rst.getInt(2);
 
-        ResultSet rst  = stm.executeQuery();
-
-        ArrayList<String> date = new ArrayList<>();
-
-        while (true) {
-            if (!rst.next()) break;
-
-            date .add(rst.getString(2));
+            Custom dailyRevenueTm = new Custom(date,count);
+            dailyRevenueTmList.add(dailyRevenueTm);
         }
-        return date;
+        return dailyRevenueTmList;
+
+    }
+
+    @Override
+    public Custom orderDaily(Date date) throws SQLException,ClassNotFoundException {
+
+        ResultSet resultSet = SQLUtill.execute("SELECT o.order_date,COUNT(DISTINCT o.order_id),SUM(od.qty) FROM orders o JOIN order_detail od ON o.order_id = od.order_id WHERE o.order_date = ? GROUP BY o.order_date ORDER BY o.order_date",date);//pstm.executeQuery();
+        while (resultSet.next()) {
+            String date1 = resultSet.getString(1);
+            int count = resultSet.getInt(2);
+            int totQty = resultSet.getInt(3);
+
+            return new Custom(date1, count, totQty);
+        }
+        return null;
     }
 }

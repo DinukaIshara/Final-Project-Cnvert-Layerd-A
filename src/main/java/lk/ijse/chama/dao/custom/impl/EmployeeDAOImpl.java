@@ -48,13 +48,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public boolean exist(String id) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtill.execute("SELECT emp_id FROM employee WHERE emp_id=?",id);
-        return rst.next();
-    }
-
-    @Override
-    public String generateNewID(String currentId) throws SQLException, ClassNotFoundException {
+    public String generateNewID() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtill.execute("SELECT emp_id FROM employee ORDER BY CAST(SUBSTRING(emp_id, 2) AS UNSIGNED) DESC LIMIT 1");
 
         if (rst.next()) {
@@ -89,18 +83,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public List<String> getId() throws SQLException, ClassNotFoundException {
-            String sql = "SELECT emp_id FROM employee";
-            PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                    .prepareStatement(sql);
-
-            List<String> idList = new ArrayList<>();
-
-            ResultSet resultSet = pstm.executeQuery();
-            while (resultSet.next()) {
-                String id = resultSet.getString(1);
-                idList.add(id);
-            }
-            return idList;
+        ResultSet resultSet = SQLUtill.execute("SELECT emp_id FROM employee");
+        List<String> idList = new ArrayList<>();
+        while (resultSet.next()) {
+            String id = resultSet.getString(1);
+            idList.add(id);
+        }
+        return idList;
 
     }
 }

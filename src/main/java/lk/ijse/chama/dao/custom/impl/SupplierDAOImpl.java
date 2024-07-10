@@ -1,5 +1,7 @@
 package lk.ijse.chama.dao.custom.impl;
 
+import lk.ijse.chama.dao.SQLUtill;
+import lk.ijse.chama.dao.custom.RepairDAO;
 import lk.ijse.chama.dao.custom.SupplierDAO;
 import lk.ijse.chama.db.DbConnection;
 import lk.ijse.chama.entity.Supplier;
@@ -14,12 +16,7 @@ import java.util.List;
 public class SupplierDAOImpl implements SupplierDAO {
     @Override
     public ArrayList<Supplier> getAll() throws SQLException, ClassNotFoundException {
-        String sql = "SELECT * FROM supplier";
-
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtill.execute("SELECT * FROM supplier");
 
         ArrayList<Supplier> supList = new ArrayList<>();
 
@@ -39,50 +36,19 @@ public class SupplierDAOImpl implements SupplierDAO {
 
     @Override
     public boolean save(Supplier supplier) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO supplier VALUES(?, ?, ?, ?, ?, ?)";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setObject(1, supplier.getSupId());
-        pstm.setObject(2, supplier.getCompanyName());
-        pstm.setObject(3, supplier.getPersonName());
-        pstm.setObject(4, supplier.getTel());
-        pstm.setObject(5, supplier.getLocation());
-        pstm.setObject(6, supplier.getEmail());
-
-        return pstm.executeUpdate() > 0;
+        boolean result = SQLUtill.execute("INSERT INTO supplier VALUES(?, ?, ?, ?, ?, ?)",supplier.getSupId(),supplier.getCompanyName(),supplier.getPersonName(),supplier.getTel(),supplier.getLocation(),supplier.getEmail());
+        return result;
     }
 
     @Override
     public boolean update(Supplier supplier) throws SQLException, ClassNotFoundException {
-        String sql = "UPDATE supplier SET person_name = ?, company_name = ?, contact_no = ?, location = ?, email = ? WHERE sup_id = ?";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setObject(1, supplier.getPersonName());
-        pstm.setObject(2, supplier.getCompanyName());
-        pstm.setObject(3, supplier.getTel());
-        pstm.setObject(4, supplier.getLocation());
-        pstm.setObject(5, supplier.getEmail());
-        pstm.setObject(6, supplier.getSupId());
-
-        return pstm.executeUpdate() > 0;
+        boolean result = SQLUtill.execute("UPDATE supplier SET company_name = ?,person_name = ?, contact_no = ?, location = ?, email = ? WHERE sup_id = ?",supplier.getCompanyName(),supplier.getPersonName(),supplier.getTel(),supplier.getLocation(),supplier.getEmail(),supplier.getSupId());
+        return result;
     }
 
     @Override
-    public boolean exist(String id) throws SQLException, ClassNotFoundException {
-        return false;
-    }
-
-    @Override
-    public String generateNewID(String currentId) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT sup_id FROM supplier ORDER BY CAST(SUBSTRING(sup_id, 2) AS UNSIGNED) DESC LIMIT 1;";
-
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-
-        ResultSet resultSet = pstm.executeQuery();
+    public String generateNewID() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = SQLUtill.execute("SELECT sup_id FROM supplier ORDER BY CAST(SUBSTRING(sup_id, 2) AS UNSIGNED) DESC LIMIT 1");//pstm.executeQuery();
         if(resultSet.next()) {
             String Id = resultSet.getString(1);
             String[] split = Id.split("S");  //" ", "2"
@@ -101,24 +67,13 @@ public class SupplierDAOImpl implements SupplierDAO {
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        String sql = "DELETE FROM supplier WHERE sup_id = ?";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setObject(1, id);
-
-        return pstm.executeUpdate() > 0;
+        boolean result = SQLUtill.execute("DELETE FROM supplier WHERE sup_id = ?",id);
+        return result;
     }
 
     @Override
     public Supplier search(String id) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT * FROM supplier WHERE sup_id = ?";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setObject(1, id);
-
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtill.execute("SELECT * FROM supplier WHERE sup_id = ?",id);//pstm.executeQuery();
         if (resultSet.next()) {
             String sup_id = resultSet.getString(1);
             String comName = resultSet.getString(2);
@@ -135,13 +90,7 @@ public class SupplierDAOImpl implements SupplierDAO {
 
     @Override
     public Supplier searchByName(String name) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT * FROM supplier WHERE company_name = ?";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setObject(1, name);
-
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtill.execute("SELECT * FROM supplier WHERE company_name = ?",name);//pstm.executeQuery();
         if (resultSet.next()) {
             String sup_id = resultSet.getString(1);
             String comName = resultSet.getString(2);
@@ -159,13 +108,9 @@ public class SupplierDAOImpl implements SupplierDAO {
 
     @Override
     public List<String> getId() throws SQLException, ClassNotFoundException {
-        String sql = "SELECT sup_id FROM supplier";
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-
         List<String> idList = new ArrayList<>();
 
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtill.execute("SELECT sup_id FROM supplier");//pstm.executeQuery();
         while (resultSet.next()) {
             String id = resultSet.getString(1);
             idList.add(id);
@@ -175,13 +120,9 @@ public class SupplierDAOImpl implements SupplierDAO {
 
     @Override
     public List<String> getName() throws SQLException, ClassNotFoundException {
-        String sql = "SELECT company_name FROM supplier";
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-
         List<String> nameList = new ArrayList<>();
 
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtill.execute("SELECT company_name FROM supplier");//pstm.executeQuery();
         while (resultSet.next()) {
             String id = resultSet.getString(1);
             nameList.add(id);

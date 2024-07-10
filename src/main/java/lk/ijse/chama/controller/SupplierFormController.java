@@ -226,7 +226,7 @@ public class SupplierFormController {
         try {
             String currentId = "";//SupplierRepo.getLastId();
 
-            nextId = supplierBO.generateNewID(currentId);//generateNextId(currentId);
+            nextId = supplierBO.generateNewID();//generateNextId(currentId);
             txtSupId.setText(nextId);
 
         } catch (SQLException e) {

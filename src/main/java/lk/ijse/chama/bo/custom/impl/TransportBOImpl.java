@@ -31,8 +31,8 @@ public class TransportBOImpl implements TransportBO {
     }
 
     @Override
-    public String generateNewID(String currentId) throws SQLException, ClassNotFoundException {
-        return transportDAO.generateNewID(currentId);
+    public String generateNewID() throws SQLException, ClassNotFoundException {
+        return transportDAO.generateNewID();
     }
 
     @Override

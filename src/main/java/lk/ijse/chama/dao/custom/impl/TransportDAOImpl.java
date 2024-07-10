@@ -16,12 +16,7 @@ import java.util.List;
 public class TransportDAOImpl implements TransportDAO {
     @Override
     public ArrayList<Transport> getAll() throws SQLException, ClassNotFoundException {
-        String sql = "SELECT * FROM transport";
-
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtill.execute("SELECT * FROM transport");//pstm.executeQuery();
 
         ArrayList<Transport> transList = new ArrayList<>();
 
@@ -40,49 +35,19 @@ public class TransportDAOImpl implements TransportDAO {
 
     @Override
     public boolean save(Transport transport) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO transport VALUES(?, ?, ?, ?, ?)";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setObject(1, transport.getTrId());
-        pstm.setObject(2, transport.getVehicalNo());
-        pstm.setObject(3, transport.getDriverName());
-        pstm.setObject(4, transport.getLocation());
-        pstm.setObject(5, transport.getCost());
-
-        return pstm.executeUpdate() > 0;
+        boolean result = SQLUtill.execute("INSERT INTO transport VALUES(?, ?, ?, ?, ?)",transport.getTrId(),transport.getVehicalNo(),transport.getDriverName(),transport.getLocation(),transport.getCost());
+        return result;
     }
 
     @Override
     public boolean update(Transport transport) throws SQLException, ClassNotFoundException {
-        String sql = "UPDATE transport SET vehicle_no = ?, driver_name = ?, location = ?, transport_cost = ? WHERE tr_id = ?";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setObject(1, transport.getVehicalNo());
-        pstm.setObject(2, transport.getDriverName());
-        pstm.setObject(3, transport.getLocation());
-        pstm.setObject(4, transport.getCost());
-        pstm.setObject(5, transport.getTrId());
-
-        return pstm.executeUpdate() > 0;
+        boolean result = SQLUtill.execute("UPDATE transport SET vehicle_no = ?, driver_name = ?, location = ?, transport_cost = ? WHERE tr_id = ?",transport.getVehicalNo(),transport.getDriverName(),transport.getLocation(),transport.getCost(),transport.getTrId());
+        return result;
     }
 
     @Override
-    public boolean exist(String id) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtill.execute("SELECT tr_id FROM transport WHERE tr_id=?",id);
-        return rst.next();
-    }
-
-    @Override
-    public String generateNewID(String currentId) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT tr_id FROM transport ORDER BY CAST(SUBSTRING(tr_id, 2) AS UNSIGNED) DESC LIMIT 1;";
-
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-
-        ResultSet resultSet = pstm.executeQuery();
+    public String generateNewID() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = SQLUtill.execute("SELECT tr_id FROM transport ORDER BY CAST(SUBSTRING(tr_id, 2) AS UNSIGNED) DESC LIMIT 1");//pstm.executeQuery();
         if(resultSet.next()) {
             String Id = resultSet.getString(1);
             String[] split = Id.split("T");  //" ", "2"
@@ -101,24 +66,13 @@ public class TransportDAOImpl implements TransportDAO {
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        String sql = "DELETE FROM transport WHERE tr_id = ?";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setObject(1, id);
-
-        return pstm.executeUpdate() > 0;
+        boolean result = SQLUtill.execute("DELETE FROM transport WHERE tr_id = ?",id);
+        return result;
     }
 
     @Override
     public Transport search(String id) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT * FROM transport WHERE location = ?";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setObject(1, id);
-
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtill.execute("SELECT * FROM transport WHERE location = ?",id);//pstm.executeQuery();
         if (resultSet.next()) {
             String tr_id = resultSet.getString(1);
             String ve_no = resultSet.getString(2);
@@ -133,14 +87,10 @@ public class TransportDAOImpl implements TransportDAO {
     }
 
     @Override
-    public List<String> getlocation() throws SQLException {
-        String sql = "SELECT location FROM transport";
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-
+    public List<String> getlocation() throws SQLException,ClassNotFoundException {
         List<String> locationList = new ArrayList<>();
 
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtill.execute("SELECT location FROM transport");//pstm.executeQuery();
         while (resultSet.next()) {
             String location = resultSet.getString(1);
             locationList.add(location);
@@ -149,13 +99,8 @@ public class TransportDAOImpl implements TransportDAO {
     }
 
     @Override
-    public Location searchByPath(String name) throws SQLException {
-        String sql = "SELECT * FROM location WHERE place = ?";
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-
-        pstm.setObject(1, name);
-        ResultSet resultSet = pstm.executeQuery();
+    public Location searchByPath(String name) throws SQLException,ClassNotFoundException {
+        ResultSet resultSet = SQLUtill.execute("SELECT * FROM location WHERE place = ?",name);//pstm.executeQuery();
         if(resultSet.next()) {
             return new Location(
                     resultSet.getString(1),
@@ -168,14 +113,10 @@ public class TransportDAOImpl implements TransportDAO {
     }
 
     @Override
-    public List<String> getPlace() throws SQLException {
-        String sql = "SELECT place FROM location";
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-
+    public List<String> getPlace() throws SQLException,ClassNotFoundException {
         List<String> placeList = new ArrayList<>();
 
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtill.execute("SELECT place FROM location");//pstm.executeQuery();
         while (resultSet.next()) {
             String place = resultSet.getString(1);
             placeList.add(place);

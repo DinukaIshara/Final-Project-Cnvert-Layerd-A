@@ -43,16 +43,12 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public boolean exist(String id) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtill.execute("SELECT cust_id FROM customer WHERE cust_id=?",id);
-        return rst.next();
-    }
+    public String generateNewID() throws SQLException, ClassNotFoundException {
+        ResultSet rst = SQLUtill.execute("SELECT cust_id FROM customer ORDER BY CAST(SUBSTRING(cust_id, 2) AS UNSIGNED) DESC LIMIT 1");
 
-    @Override
-    public String generateNewID(String currentId) throws SQLException, ClassNotFoundException {
-        //ResultSet rst = SQLUtill.execute("SELECT cust_id FROM customer ORDER BY id DESC LIMIT 1");
-        if(currentId != null) {
-            String[] split = currentId.split("C");  //" ", "2"
+        if (rst.next()) {
+            String id = rst.getString(1);
+            String[] split = id.split("C");
             int idNum = Integer.parseInt(split[1]);
 
             if(idNum >= 1){

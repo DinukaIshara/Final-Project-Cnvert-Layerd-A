@@ -292,7 +292,7 @@ public class EmployeeFormController {
         try {
             String currentId = "";//EmployeeRepo.getLastId();
 
-            nextId = employeeBO.generateNewID(currentId);//generateNextId(currentId);
+            nextId = employeeBO.generateNewID();//generateNextId(currentId);
             txtId.setText(nextId);
 
         } catch (SQLException e) {

@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import lk.ijse.chama.bo.BOFactory;
 import lk.ijse.chama.bo.custom.DashboardBO;
 import lk.ijse.chama.db.DbConnection;
+import lk.ijse.chama.dto.CustomDTO;
 import lk.ijse.chama.dto.CustomerDTO;
 import lk.ijse.chama.dto.ItemDTO;
 import lk.ijse.chama.dto.OrderDTO;
@@ -100,14 +101,14 @@ public class DashboardFormController {
     }
 
     private void loadAll() {
-        ObservableList<MostSellItemTm> obList = FXCollections.observableArrayList();
+        ObservableList<CustomDTO> obList = FXCollections.observableArrayList();
 
         try {
-            List<MostSellItemTm> itemList = dashboardBO.getMostSellItem();//DashboardRepo.getMostSellItem();
+            List<CustomDTO> itemList = dashboardBO.getMostSellItem();//DashboardRepo.getMostSellItem();
             ItemDTO item;
-            for (MostSellItemTm sellItem : itemList) {
+            for (CustomDTO sellItem : itemList) {
                 item = dashboardBO.searchItemById(sellItem.getItemId());//BrandNewItemRepo.searchById(sellItem.getItemId());
-                MostSellItemTm tm = new MostSellItemTm(
+                CustomDTO tm = new CustomDTO(
                         item.getName(),
                         sellItem.getOrderCount(),
                         sellItem.getSumQty()
@@ -162,9 +163,9 @@ public class DashboardFormController {
 
     // Pie Chart --------------------------------------------------------------------------------------------------------------------------------------------------
     public void pieChartConnect() throws SQLException,ClassNotFoundException {
-        List<MostSellItemTm> itemList = dashboardBO.getMostSellItem();//DashboardRepo.getMostSellItem();
+        List<CustomDTO> itemList = dashboardBO.getMostSellItem();//DashboardRepo.getMostSellItem();
         ItemDTO item;
-        for (MostSellItemTm sellItem : itemList) {
+        for (CustomDTO sellItem : itemList) {
             item = dashboardBO.searchItemById(sellItem.getItemId());//BrandNewItemRepo.searchById(sellItem.getItemId());
 
             ObservableList<PieChart.Data> pieChartData =
@@ -185,7 +186,16 @@ public class DashboardFormController {
 
     // Bar Chart -----------------------------------------------------------------------------------------------------------------------------------------------------
     public void barChart() throws SQLException {
-        XYChart.Series chart = new XYChart.Series();
+        try {
+            XYChart.Series series1 = dashboardBO.getBarChart();
+            barChart.getData().addAll(series1);
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+
+        /*XYChart.Series chart = new XYChart.Series();
         chart.setName("Chama Computers");
 
         String sql = "SELECT\n" +
@@ -216,13 +226,8 @@ public class DashboardFormController {
             int count  = rst.getInt(4);
             chart.getData().add(new XYChart.Data<>(date, count));
         }
-        barChart.getData().addAll(chart);
-        /*try {
-            XYChart.Series series = dashboardBO.
-            barChart.getData().addAll(series);
-        }catch (Exception e){
+        barChart.getData().addAll(chart);*/
 
-        }*/
     }
 
     private void getOrderDate() {
@@ -244,16 +249,16 @@ public class DashboardFormController {
     }
 
     @FXML
-    void btnSearchOrderDateOnAction() throws SQLException {
+    void btnSearchOrderDateOnAction() throws SQLException,ClassNotFoundException {
         Date date = java.sql.Date.valueOf(txtOrderDate.getText());
 
-        DailyOrders dailyOrders = orderDaily(date);
+        CustomDTO dailyOrders = dashboardBO.orderDaily(date);//orderDaily(date);
 
-        lblOrderCountlab.setText(String.valueOf(dailyOrders.getCountOr()));
-        lblItemQty.setText(String.valueOf(dailyOrders.getCountQty()));
+        lblOrderCountlab.setText(String.valueOf(dailyOrders.getOrderCount()));
+        lblItemQty.setText(String.valueOf(dailyOrders.getSumQty()));
     }
 
-    public void txtOrderDateOnAction(ActionEvent actionEvent) throws SQLException {
+    public void txtOrderDateOnAction(ActionEvent actionEvent) throws SQLException,ClassNotFoundException {
         btnSearchOrderDateOnAction();
     }
 

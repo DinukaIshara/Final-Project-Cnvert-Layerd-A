@@ -239,7 +239,7 @@ public class RepairFormController {
 
     private void clearFields() {
         txtCost.setText("");
-        txtRepairId.setText("");
+        txtRepairId.setText(getCurrentId());
         txtDescription.setText("");
         txtItemName.setText("");
         txtReceiveDate.setValue(null);
@@ -257,7 +257,7 @@ public class RepairFormController {
         try {
             String currentId = "";//repairBO.getRepairLastId();//RepairRepo.getLastId();
 
-            nextId = repairBO.generateNewID(currentId);//generateNextId(currentId);
+            nextId = repairBO.generateNewID();//generateNextId(currentId);
             txtRepairId.setText(nextId);
 
         } catch (SQLException e) {

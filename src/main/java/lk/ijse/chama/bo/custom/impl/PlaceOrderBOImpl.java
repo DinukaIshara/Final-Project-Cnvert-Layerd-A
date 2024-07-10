@@ -1,9 +1,7 @@
 package lk.ijse.chama.bo.custom.impl;
 
 import lk.ijse.chama.bo.custom.PlaceOrderBO;
-import lk.ijse.chama.bo.custom.TransportBO;
 import lk.ijse.chama.dao.DAOFactory;
-import lk.ijse.chama.dao.SQLUtill;
 import lk.ijse.chama.dao.custom.*;
 import lk.ijse.chama.db.DbConnection;
 import lk.ijse.chama.dto.*;
@@ -13,7 +11,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,19 +37,8 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
     }
 
     @Override
-    public boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        return false;
-    }
-
-    @Override
-    public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        return false;
-    }
-
-    @Override
     public String generateOrderID() throws SQLException, ClassNotFoundException {
-        String id = "";
-        return orderDAO.generateNewID(id);
+        return orderDAO.generateNewID();
     }
 
     @Override
@@ -109,33 +95,43 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
         Connection connection = DbConnection.getInstance().getConnection();
         connection.setAutoCommit(false);
 
-        Order order = new Order(orderDTO.getOrderId(),orderDTO.getCustomerId(),orderDTO.getTrId(),orderDTO.getDate(),orderDTO.getPayment());
-        ArrayList<OrderDetail> orderDetailEn = new ArrayList<>();
-
-        for (OrderDetailDTO order1: orderDetails){
-            orderDetailEn.add(new OrderDetail(order1.getOrderId(),order1.getItemCode(),order1.getQty(),order1.getUnitPrice()));
-        }
-
         try {
-           boolean isOrderSaved = orderDAO.save(order);//false;//OrderRepo.save(po.getOrder());
-             if (isOrderSaved) {
-               boolean isQtyUpdated = itemDAO.updateQ(orderDetailEn);//false;//BrandNewItemRepo.update(po.getOdList());
-                 if (isQtyUpdated) {
-                        boolean isOrderDetailSaved = orderDetailsDAO.save(orderDetailEn);//false;//OrderDetailRepo.save(po.getOdList());
-                        if (isOrderDetailSaved) {
-                            connection.commit();
-                            return true;
-                        }
+            Order order = new Order(orderDTO.getOrderId(),orderDTO.getCustomerId(),orderDTO.getTrId(),orderDTO.getDate(),orderDTO.getPayment());
+            ArrayList<OrderDetail> orderDetailEn = new ArrayList<>();
+
+            System.out.println(order);
+
+            for (OrderDetailDTO order1: orderDetails){
+                orderDetailEn.add(new OrderDetail(order1.getOrderId(),order1.getItemCode(),order1.getQty(),order1.getUnitPrice()));
+            }
+
+            boolean isOrderSaved = orderDAO.save(order);
+
+            if (isOrderSaved) {
+
+
+
+                boolean isQtyUpdated = itemDAO.updateQ(orderDetailEn);
+
+                if (isQtyUpdated) {
+                    boolean isOrderDetailSaved = orderDetailsDAO.save(orderDetailEn);
+
+                    if (isOrderDetailSaved) {
+                        connection.commit();
+                        return true;
                     }
                 }
-                connection.rollback();
-                return false;
-            } catch (Exception e) {
-                connection.rollback();
-                return false;
-            } finally {
-                connection.setAutoCommit(true);
             }
+
+            connection.rollback();
+            return false;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            connection.rollback();
+            return false;
+        } finally {
+            connection.setAutoCommit(true);
+        }
 
     }
 
@@ -146,14 +142,6 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
 
     @Override
     public List<String> getCustomerTel() throws SQLException, ClassNotFoundException {
-        /*ResultSet rst = SQLUtill.execute("SELECT contact_no FROM customer");
-        List<String> idList = new ArrayList<>();
-
-        while (rst.next()) {
-            String id = rst.getString(1);
-            idList.add(id);
-        }
-        return idList;*/
         return customerDAO.getTel();
 
     }

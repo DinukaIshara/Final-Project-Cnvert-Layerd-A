@@ -61,8 +61,8 @@ public class PlaceItemBOImpl implements PlaceItemBO {
     }
 
     @Override
-    public String generateNewID(String currentId) throws SQLException, ClassNotFoundException {
-        return itemDAO.generateNewID(currentId);
+    public String generateNewID() throws SQLException, ClassNotFoundException {
+        return itemDAO.generateNewID();
     }
 
     @Override

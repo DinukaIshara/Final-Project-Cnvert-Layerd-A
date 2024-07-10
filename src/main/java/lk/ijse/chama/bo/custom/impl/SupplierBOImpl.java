@@ -35,8 +35,8 @@ public class SupplierBOImpl implements SupplierBO {
     }
 
     @Override
-    public String generateNewID(String currentId) throws SQLException, ClassNotFoundException {
-        return supplierDAO.generateNewID(currentId);
+    public String generateNewID() throws SQLException, ClassNotFoundException {
+        return supplierDAO.generateNewID();
     }
 
     @Override

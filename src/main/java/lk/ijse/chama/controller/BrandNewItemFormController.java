@@ -328,7 +328,7 @@ public class BrandNewItemFormController {
         try {
             String currentId = "";//BrandNewItemRepo.getLastId();
 
-            nextId = placeItemBO.generateNewID(currentId);//generateNextOrderId(currentId);
+            nextId = placeItemBO.generateNewID();//generateNextOrderId(currentId);
             txtItemId.setText(nextId);
 
         } catch (SQLException e) {

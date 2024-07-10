@@ -229,7 +229,7 @@ public class TransportFormController {
         try {
             String currentId = "";TransportRepo.getLastId();
 
-            nextId = transportBO.generateNewID(currentId);//generateNextId(currentId);
+            nextId = transportBO.generateNewID();//generateNextId(currentId);
             txtId.setText(nextId);
 
         } catch (SQLException e) {

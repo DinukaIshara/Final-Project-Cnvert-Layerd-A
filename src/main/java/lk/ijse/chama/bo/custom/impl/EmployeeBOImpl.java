@@ -34,8 +34,8 @@ public class EmployeeBOImpl implements EmployeeBO {
     }
 
     @Override
-    public String generateNewID(String currentId) throws SQLException, ClassNotFoundException {
-        return employeeDAO.generateNewID(currentId);
+    public String generateNewID() throws SQLException, ClassNotFoundException {
+        return employeeDAO.generateNewID();
     }
 
     @Override

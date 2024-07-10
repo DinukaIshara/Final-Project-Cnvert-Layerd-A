@@ -23,7 +23,7 @@ public interface PlaceItemBO extends SuperBO {
     ItemDTO searchItemByName(String name) throws SQLException,ClassNotFoundException;
     boolean updateItemQ(List<OrderDetail> isList) throws SQLException,ClassNotFoundException;
     boolean updateItemQty(String itemCode, int qty) throws SQLException,ClassNotFoundException;
-    String generateNewID(String currentId) throws SQLException, ClassNotFoundException;
+    String generateNewID() throws SQLException, ClassNotFoundException;
     boolean deleteItem(String id) throws SQLException, ClassNotFoundException;
     ItemDTO searchItemById(String id) throws SQLException, ClassNotFoundException;
     List<String> getItemDate() throws SQLException,ClassNotFoundException;

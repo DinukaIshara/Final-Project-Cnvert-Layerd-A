@@ -15,12 +15,8 @@ import java.util.List;
 public class OrderDAOImpl implements OrderDAO {
     @Override
     public ArrayList<Order> getAll() throws SQLException, ClassNotFoundException {
-        String sql = "SELECT * FROM orders";
 
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtill.execute("SELECT * FROM orders");//pstm.executeQuery();
 
         ArrayList<Order> orderList = new ArrayList<>();
 
@@ -39,17 +35,8 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public boolean save(Order order) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO orders VALUES(?, ?, ?, ? ,?)";
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-        System.out.println(order);
-        pstm.setString(1, order.getOrderId());
-        pstm.setString(2, order.getCustomerId());
-        pstm.setString(3, order.getTrId());
-        pstm.setDate(4, order.getDate());
-        pstm.setString(5, order.getPayment());
-
-        return pstm.executeUpdate() > 0;
+        boolean result = SQLUtill.execute("INSERT INTO orders VALUES(?, ?, ?, ? ,?)",order.getOrderId(),order.getCustomerId(),order.getTrId(),order.getDate(),order.getPayment());
+        return result;
     }
 
     @Override
@@ -58,12 +45,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public boolean exist(String id) throws SQLException, ClassNotFoundException {
-        return false;
-    }
-
-    @Override
-    public String generateNewID(String currentId) throws SQLException, ClassNotFoundException {
+    public String generateNewID() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtill.execute("SELECT order_id FROM orders ORDER BY CAST(SUBSTRING(order_id, 2) AS UNSIGNED) DESC LIMIT 1");
 
         if (rst.next()) {
@@ -87,14 +69,10 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public List<String> getAllDate() throws SQLException, ClassNotFoundException {
-        String sql = "SELECT order_date FROM orders GROUP BY order_date";
-
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
 
         List<String> dateList = new ArrayList<>();
 
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtill.execute("SELECT order_date FROM orders GROUP BY order_date");//pstm.executeQuery();
         while (resultSet.next()) {
             String id = resultSet.getString(1);
             dateList.add(id);
@@ -104,12 +82,8 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public String getLastOrderId() throws SQLException,ClassNotFoundException {
-        String sql = "SELECT order_id FROM orders ORDER BY CAST(SUBSTRING(order_id, 2) AS UNSIGNED) DESC LIMIT 1;";
 
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtill.execute("SELECT order_id FROM orders ORDER BY CAST(SUBSTRING(order_id, 2) AS UNSIGNED) DESC LIMIT 1;");//pstm.executeQuery();
         if(resultSet.next()) {
             String orderId = resultSet.getString(1);
             return orderId;

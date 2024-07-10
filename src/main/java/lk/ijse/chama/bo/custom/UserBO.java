@@ -10,6 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public interface UserBO extends SuperBO {
-    boolean saveUser(String userName, String password) throws SQLException ;
+    boolean saveUser(String userName, String password) throws SQLException,ClassNotFoundException ;
     String Checkcredential(String username) throws SQLException,ClassNotFoundException;
 }

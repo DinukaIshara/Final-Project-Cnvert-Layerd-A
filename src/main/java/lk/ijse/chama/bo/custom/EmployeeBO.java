@@ -17,7 +17,7 @@ public interface EmployeeBO extends SuperBO {
     public ArrayList<EmployeeDTO> getAllEmployee() throws SQLException, ClassNotFoundException;
     public boolean saveEmployee(EmployeeDTO employee) throws SQLException, ClassNotFoundException;
     public boolean updateEmployee(EmployeeDTO employee) throws SQLException, ClassNotFoundException;
-    public String generateNewID(String currentId) throws SQLException, ClassNotFoundException ;
+    public String generateNewID() throws SQLException, ClassNotFoundException ;
     public boolean deleteEmployee(String id) throws SQLException, ClassNotFoundException;
     public EmployeeDTO searchEmployee(String id) throws SQLException, ClassNotFoundException;
     public List<String> getEmployeeId() throws SQLException, ClassNotFoundException;

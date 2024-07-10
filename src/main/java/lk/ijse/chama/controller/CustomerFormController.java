@@ -219,9 +219,8 @@ public class CustomerFormController {
         String nextId = "";
 
         try {
-            String currentId = CustomerRepo.getLastId();
 
-            nextId = customerBO.generateNewID(currentId);//generateNextId(currentId);
+            nextId = customerBO.generateNewID();//generateNextId(currentId);
             txtId.setText(nextId);
 
         } catch (Exception e) {

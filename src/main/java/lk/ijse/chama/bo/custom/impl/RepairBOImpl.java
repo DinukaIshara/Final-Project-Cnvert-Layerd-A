@@ -40,13 +40,8 @@ public class RepairBOImpl implements RepairBO {
     }
 
     @Override
-    public boolean existRepair(String id) throws SQLException, ClassNotFoundException {
-        return repairDAO.exist(id);
-    }
-
-    @Override
-    public String generateNewID(String currentId) throws SQLException, ClassNotFoundException {
-        return repairDAO.generateNewID(currentId);
+    public String generateNewID() throws SQLException, ClassNotFoundException {
+        return repairDAO.generateNewID();
     }
 
     @Override

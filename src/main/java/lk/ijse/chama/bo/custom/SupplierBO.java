@@ -16,7 +16,7 @@ public interface SupplierBO extends SuperBO {
     ArrayList<SupplierDTO> getAllSuppliers() throws SQLException, ClassNotFoundException;
     boolean saveSupplier(SupplierDTO supplier) throws SQLException, ClassNotFoundException;
     boolean updateSupplier(SupplierDTO supplier) throws SQLException, ClassNotFoundException;
-    String generateNewID(String currentId) throws SQLException, ClassNotFoundException ;
+    String generateNewID() throws SQLException, ClassNotFoundException ;
     boolean deleteSupplier(String id) throws SQLException, ClassNotFoundException ;
     SupplierDTO searchByIdSupplier(String id) throws SQLException, ClassNotFoundException ;
     SupplierDTO searchByNameSupplier(String name) throws SQLException, ClassNotFoundException ;

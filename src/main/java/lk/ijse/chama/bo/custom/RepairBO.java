@@ -19,8 +19,7 @@ public interface RepairBO extends SuperBO {
     boolean saveRepair(RepairDTO repair) throws SQLException, ClassNotFoundException;
     boolean updateRepair(RepairDTO repair) throws SQLException, ClassNotFoundException;
     boolean deleteRepair(String id) throws SQLException, ClassNotFoundException;
-    boolean existRepair(String id) throws SQLException, ClassNotFoundException;
-    String generateNewID(String currentId) throws SQLException, ClassNotFoundException;
+    String generateNewID() throws SQLException, ClassNotFoundException;
     RepairDTO searchRepair(String id) throws SQLException, ClassNotFoundException;
     List<String> getRepairId() throws SQLException, ClassNotFoundException;
     String getRepairLastId() throws SQLException, ClassNotFoundException;

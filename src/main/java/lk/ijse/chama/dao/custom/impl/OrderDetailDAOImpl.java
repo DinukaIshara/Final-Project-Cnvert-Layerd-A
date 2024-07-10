@@ -1,7 +1,9 @@
 package lk.ijse.chama.dao.custom.impl;
 
+import lk.ijse.chama.dao.SQLUtill;
 import lk.ijse.chama.dao.custom.OrderDetailDAO;
 import lk.ijse.chama.db.DbConnection;
+import lk.ijse.chama.entity.Custom;
 import lk.ijse.chama.entity.OrderDetail;
 import lk.ijse.chama.entity.tm.MostSellItemTm;
 
@@ -19,23 +21,17 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 
     @Override
     public boolean save(OrderDetail od) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO order_detail VALUES(?, ?, ?, ?)";
-
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-
-        pstm.setString(1, od.getOrderId());
-        pstm.setString(2, od.getItemCode());
-        pstm.setInt(3, od.getQty());
-        pstm.setDouble(4, od.getUnitPrice());
-
-        return pstm.executeUpdate() > 0;    //false ->  |
+        System.out.println( "save - "+ od);
+        boolean result = SQLUtill.execute("INSERT INTO order_detail VALUES(?, ?, ?, ?)",od.getOrderId(),od.getItemCode(),od.getQty(),od.getUnitPrice());
+        return result;
     }
 
     @Override
     public boolean save(List<OrderDetail> odList) throws SQLException,ClassNotFoundException {
         for (OrderDetail od : odList) {
+            System.out.println( "Save "+ od);
             boolean isSaved = save(od);
+            System.out.println("is saved - "+isSaved);
             if (!isSaved) {
                 return false;
             }
@@ -44,22 +40,17 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
     }
 
     @Override
-    public List<MostSellItemTm> getMostSellItem() throws SQLException {
-        String sql = "SELECT item_id,COUNT(order_id),SUM(qty) FROM order_detail GROUP BY item_id ORDER BY SUM(qty) DESC LIMIT 5;";
+    public List<Custom> getMostSellItem() throws SQLException,ClassNotFoundException {
+        ResultSet resultSet = SQLUtill.execute("SELECT item_id,COUNT(order_id),SUM(qty) FROM order_detail GROUP BY item_id ORDER BY SUM(qty) DESC LIMIT 5");//pstm.executeQuery();
 
-        PreparedStatement pstm = DbConnection.getInstance().getConnection()
-                .prepareStatement(sql);
-
-        ResultSet resultSet = pstm.executeQuery();
-
-        List<MostSellItemTm> sellItem = new ArrayList<>();
+        List<Custom> sellItem = new ArrayList<>();
 
         while (resultSet.next()) {
             String id = resultSet.getString(1);
             int count = resultSet.getInt(2);
             int sumQty = resultSet.getInt(3);
 
-            MostSellItemTm mostSellItem = new MostSellItemTm(id, count, sumQty);
+            Custom mostSellItem = new Custom(id, count, sumQty);
             sellItem.add(mostSellItem);
         }
         return sellItem;
@@ -71,12 +62,7 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
     }
 
     @Override
-    public boolean exist(String id) throws SQLException, ClassNotFoundException {
-        return false;
-    }
-
-    @Override
-    public String generateNewID(String currentId) throws SQLException, ClassNotFoundException {
+    public String generateNewID() throws SQLException, ClassNotFoundException {
         return null;
     }
 

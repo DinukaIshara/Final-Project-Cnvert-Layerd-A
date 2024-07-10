@@ -20,7 +20,7 @@ public interface TransportBO extends SuperBO {
 
     boolean deleteTransport(String id) throws SQLException,ClassNotFoundException;
 
-    String generateNewID(String currentId) throws SQLException, ClassNotFoundException;
+    String generateNewID() throws SQLException, ClassNotFoundException;
 
     List<TransportDTO> getAllTransport() throws SQLException, ClassNotFoundException ;
 

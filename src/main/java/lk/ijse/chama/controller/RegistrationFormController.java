@@ -66,6 +66,8 @@ public class RegistrationFormController {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
