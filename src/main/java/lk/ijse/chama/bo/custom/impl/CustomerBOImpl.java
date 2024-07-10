@@ -2,10 +2,12 @@ package lk.ijse.chama.bo.custom.impl;
 
 import lk.ijse.chama.bo.custom.CustomerBO;
 import lk.ijse.chama.dao.DAOFactory;
+import lk.ijse.chama.dao.SQLUtill;
 import lk.ijse.chama.dao.custom.CustomerDAO;
 import lk.ijse.chama.dto.CustomerDTO;
 import lk.ijse.chama.entity.Customer;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +47,15 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     @Override
-    public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
-        Customer customer = customerDAO.search(id);
+    public CustomerDTO searchCustomer(String tel) throws SQLException, ClassNotFoundException {
+        Customer customer = customerDAO.search(tel);
+        CustomerDTO customerDTO = new CustomerDTO(customer.getCustId(), customer.getCName(), customer.getCAddress(), customer.getCNIC(), customer.getContactNo(), customer.getCEmail());
+        return customerDTO;
+    }
+
+    @Override
+    public CustomerDTO searchByCustomerId(String id) throws SQLException, ClassNotFoundException {
+        Customer customer = customerDAO.searchById(id);
         CustomerDTO customerDTO = new CustomerDTO(customer.getCustId(), customer.getCName(), customer.getCAddress(), customer.getCNIC(), customer.getContactNo(), customer.getCEmail());
         return customerDTO;
     }

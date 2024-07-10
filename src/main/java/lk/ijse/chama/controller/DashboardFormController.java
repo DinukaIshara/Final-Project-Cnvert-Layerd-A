@@ -13,22 +13,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.chama.bo.BOFactory;
 import lk.ijse.chama.bo.custom.DashboardBO;
-import lk.ijse.chama.db.DbConnection;
 import lk.ijse.chama.dto.CustomDTO;
 import lk.ijse.chama.dto.CustomerDTO;
 import lk.ijse.chama.dto.ItemDTO;
 import lk.ijse.chama.dto.OrderDTO;
-import lk.ijse.chama.entity.*;
-import lk.ijse.chama.entity.tm.MostSellItemTm;
 import org.controlsfx.control.textfield.TextFields;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
-
-import static lk.ijse.chama.repository.DashboardRepo.orderDaily;
 
 public class DashboardFormController {
 
@@ -104,10 +97,10 @@ public class DashboardFormController {
         ObservableList<CustomDTO> obList = FXCollections.observableArrayList();
 
         try {
-            List<CustomDTO> itemList = dashboardBO.getMostSellItem();//DashboardRepo.getMostSellItem();
+            List<CustomDTO> itemList = dashboardBO.getMostSellItem();
             ItemDTO item;
             for (CustomDTO sellItem : itemList) {
-                item = dashboardBO.searchItemById(sellItem.getItemId());//BrandNewItemRepo.searchById(sellItem.getItemId());
+                item = dashboardBO.searchItemById(sellItem.getItemId());
                 CustomDTO tm = new CustomDTO(
                         item.getName(),
                         sellItem.getOrderCount(),
@@ -130,7 +123,7 @@ public class DashboardFormController {
     private void loadCustomerCount() { // Check Customer Count
         int count = 0;
         try {
-            List<CustomerDTO> customerList = dashboardBO.getAllCustomers();//CustomerRepo.getAll();
+            List<CustomerDTO> customerList = dashboardBO.getAllCustomers();
             for (CustomerDTO cust : customerList) {
 
                 count ++;
@@ -147,7 +140,7 @@ public class DashboardFormController {
     private void loadOrderCount() {
         int count = 0;
         try {
-            List<OrderDTO> orderList = dashboardBO.getAllOrders();//OrderRepo.getAll();
+            List<OrderDTO> orderList = dashboardBO.getAllOrders();
             for (OrderDTO order : orderList) {
 
                 count ++;
@@ -163,10 +156,10 @@ public class DashboardFormController {
 
     // Pie Chart --------------------------------------------------------------------------------------------------------------------------------------------------
     public void pieChartConnect() throws SQLException,ClassNotFoundException {
-        List<CustomDTO> itemList = dashboardBO.getMostSellItem();//DashboardRepo.getMostSellItem();
+        List<CustomDTO> itemList = dashboardBO.getMostSellItem();
         ItemDTO item;
         for (CustomDTO sellItem : itemList) {
-            item = dashboardBO.searchItemById(sellItem.getItemId());//BrandNewItemRepo.searchById(sellItem.getItemId());
+            item = dashboardBO.searchItemById(sellItem.getItemId());
 
             ObservableList<PieChart.Data> pieChartData =
                     FXCollections.observableArrayList(
@@ -195,46 +188,13 @@ public class DashboardFormController {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
 
-        /*XYChart.Series chart = new XYChart.Series();
-        chart.setName("Chama Computers");
-
-        String sql = "SELECT\n" +
-                "    DATE_FORMAT(MIN(o.order_date), '%Y-%m-%d') AS WeekStartDate,\n" +
-                "    DATE_FORMAT(MAX(o.order_date), '%Y-%m-%d') AS WeekEndDate,\n" +
-                "    COUNT(DISTINCT o.order_id) AS WeeklyOrders,\n" +
-                "    SUM(od.qty * od.unit_price) AS TotalAmount\n" +
-                "FROM\n" +
-                "    orders o\n" +
-                "JOIN \n" +
-                "    order_detail od ON o.order_id = od.order_id\n" +
-                "WHERE\n" +
-                "    o.order_date BETWEEN (SELECT MIN(order_date) FROM orders) AND (SELECT MAX(order_date) FROM orders)\n" +
-                "GROUP BY\n" +
-                "    YEARWEEK(o.order_date, 1)\n" +
-                "ORDER BY\n" +
-                "    WeekStartDate;";
-
-        PreparedStatement stm = DbConnection.getInstance().getConnection().prepareStatement(sql);
-
-        ResultSet rst  = stm.executeQuery();
-
-        while (true) {
-            if (!rst.next()) break;
-
-            String date = rst.getString(2);
-
-            int count  = rst.getInt(4);
-            chart.getData().add(new XYChart.Data<>(date, count));
-        }
-        barChart.getData().addAll(chart);*/
-
     }
 
     private void getOrderDate() {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> dateList = dashboardBO.getAllDate();//OrderRepo.getAllDate();
+            List<String> dateList = dashboardBO.getAllDate();
 
             for (String date : dateList) {
                 obList.add(date);
@@ -252,7 +212,7 @@ public class DashboardFormController {
     void btnSearchOrderDateOnAction() throws SQLException,ClassNotFoundException {
         Date date = java.sql.Date.valueOf(txtOrderDate.getText());
 
-        CustomDTO dailyOrders = dashboardBO.orderDaily(date);//orderDaily(date);
+        CustomDTO dailyOrders = dashboardBO.orderDaily(date);
 
         lblOrderCountlab.setText(String.valueOf(dailyOrders.getOrderCount()));
         lblItemQty.setText(String.valueOf(dailyOrders.getSumQty()));
@@ -265,7 +225,7 @@ public class DashboardFormController {
     public void setMonthlyProfit(){
         double monthlyProfit;
         try {
-            monthlyProfit = dashboardBO.getLastMonthIncome();//getLastMonthIncome();
+            monthlyProfit = dashboardBO.getLastMonthIncome();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }  catch (ClassNotFoundException e) {

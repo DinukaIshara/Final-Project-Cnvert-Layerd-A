@@ -12,9 +12,8 @@ import lk.ijse.chama.util.QrGenerateor;
 import lk.ijse.chama.bo.BOFactory;
 import lk.ijse.chama.bo.custom.CustomerBO;
 import lk.ijse.chama.dto.CustomerDTO;
-import lk.ijse.chama.entity.tm.CustomerTm;
-import lk.ijse.chama.repository.CustomerRepo;
 import lk.ijse.chama.util.validation.Regex;
+import lk.ijse.chama.view.tdm.tm.CustomerTm;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.sql.SQLException;
@@ -92,7 +91,7 @@ public class CustomerFormController {
         ObservableList<CustomerTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<CustomerDTO> customerList = customerBO.getAllCustomers();/*CustomerRepo.getAll();*/
+            List<CustomerDTO> customerList = customerBO.getAllCustomers();
             for (CustomerDTO customer : customerList) {
                 CustomerTm tm = new CustomerTm(
                         customer.getCustId(),
@@ -125,7 +124,7 @@ public class CustomerFormController {
 
         try {
             if(isValidate()) {
-                boolean isSaved = customerBO.saveCustomer(customer);/*CustomerRepo.save(customer);*/
+                boolean isSaved = customerBO.saveCustomer(customer);
                 if (isSaved) {
                     QrGenerateor.setData(contact, email, 1);
                     new Alert(Alert.AlertType.CONFIRMATION, "customer saved!").show();
@@ -160,7 +159,7 @@ public class CustomerFormController {
             try {
                 if (isValidate()) { // Add Validation
                     System.out.println(customer);
-                    boolean isUpdated = customerBO.updateCustomer(customer);/*CustomerRepo.update(customer);*/
+                    boolean isUpdated = customerBO.updateCustomer(customer);
 
                     if (isUpdated) {
                         new Alert(Alert.AlertType.CONFIRMATION, "customer updated!").show();
@@ -188,7 +187,7 @@ public class CustomerFormController {
             String id = txtId.getText();
 
             try {
-                boolean isDeleted = customerBO.deleteCustomer(id);/*CustomerRepo.delete(id);*/
+                boolean isDeleted = customerBO.deleteCustomer(id);
                 if (isDeleted) {
                     new Alert(Alert.AlertType.CONFIRMATION, "customer deleted!").show();
                     clearFields();
@@ -220,7 +219,7 @@ public class CustomerFormController {
 
         try {
 
-            nextId = customerBO.generateNewID();//generateNextId(currentId);
+            nextId = customerBO.generateNewID();
             txtId.setText(nextId);
 
         } catch (Exception e) {
@@ -239,7 +238,7 @@ public class CustomerFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> telList = customerBO.getCustomerTel();/*CustomerRepo.getTel();*/
+            List<String> telList = customerBO.getCustomerTel();
 
             for (String tel : telList) {
                 obList.add(tel);
@@ -256,7 +255,7 @@ public class CustomerFormController {
         try {
             String tel = txtSearchCustomers.getText();
 
-            CustomerDTO customer = customerBO.searchCustomer(tel);/*CustomerRepo.searchByTel(String.valueOf(tel))*/
+            CustomerDTO customer = customerBO.searchCustomer(tel);
             ;
             if (customer != null) {
                 txtId.setText(customer.getCustId());

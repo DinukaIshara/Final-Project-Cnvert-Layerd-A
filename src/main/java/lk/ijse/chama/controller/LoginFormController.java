@@ -14,13 +14,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.chama.bo.BOFactory;
 import lk.ijse.chama.bo.custom.UserBO;
-import lk.ijse.chama.db.DbConnection;
 import lk.ijse.chama.util.validation.Regex;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginFormController {
@@ -55,7 +51,7 @@ public class LoginFormController {
     private void checkCredential(String user_name, String pw) throws SQLException, IOException,ClassNotFoundException {
         String db = userBO.Checkcredential(user_name);
 
-        if (db==null) {
+        if (db == null) {
             new Alert(Alert.AlertType.ERROR, "Sorry, user name not found!").show();
         }else {
             if (pw.equals(db)) {

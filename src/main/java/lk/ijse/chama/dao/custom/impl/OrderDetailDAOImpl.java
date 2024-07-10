@@ -2,12 +2,9 @@ package lk.ijse.chama.dao.custom.impl;
 
 import lk.ijse.chama.dao.SQLUtill;
 import lk.ijse.chama.dao.custom.OrderDetailDAO;
-import lk.ijse.chama.db.DbConnection;
 import lk.ijse.chama.entity.Custom;
 import lk.ijse.chama.entity.OrderDetail;
-import lk.ijse.chama.entity.tm.MostSellItemTm;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

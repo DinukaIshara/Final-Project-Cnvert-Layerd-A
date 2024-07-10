@@ -11,12 +11,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.chama.bo.BOFactory;
 import lk.ijse.chama.bo.custom.UserBO;
-import lk.ijse.chama.db.DbConnection;
 import lk.ijse.chama.util.validation.Regex;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class RegistrationFormController {
@@ -53,7 +50,7 @@ public class RegistrationFormController {
 
         try {
             if(isValied()){ // Add Validation
-                boolean isSaved = userBO.saveUser(userName,password);//saveUser(userName, password);
+                boolean isSaved = userBO.saveUser(userName,password);
                 if(isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "user saved!").show();
                     callLogIn();

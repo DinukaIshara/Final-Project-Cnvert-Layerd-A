@@ -12,10 +12,8 @@ import lk.ijse.chama.bo.BOFactory;
 import lk.ijse.chama.bo.custom.SupplierBO;
 import lk.ijse.chama.db.DbConnection;
 import lk.ijse.chama.dto.SupplierDTO;
-import lk.ijse.chama.entity.Supplier;
-import lk.ijse.chama.entity.tm.SupplierTm;
-import lk.ijse.chama.repository.SupplierRepo;
 import lk.ijse.chama.util.validation.Regex;
+import lk.ijse.chama.view.tdm.tm.SupplierTm;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -97,7 +95,7 @@ public class SupplierFormController {
         ObservableList<SupplierTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<SupplierDTO> supplierList = supplierBO.getAllSuppliers();//SupplierRepo.getAll();
+            List<SupplierDTO> supplierList = supplierBO.getAllSuppliers();
             for (SupplierDTO supplier : supplierList) {
                 SupplierTm tm = new SupplierTm(
                         supplier.getSupId(),
@@ -131,7 +129,7 @@ public class SupplierFormController {
 
         try {
             if(isValidat()) {
-                boolean isSaved = supplierBO.saveSupplier(suppler);//SupplierRepo.save(suppler);
+                boolean isSaved = supplierBO.saveSupplier(suppler);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "supplier saved!").show();
                     clearFields();
@@ -165,7 +163,7 @@ public class SupplierFormController {
 
             try {
                 if (isValidat()) {
-                    boolean isSaved = supplierBO.updateSupplier(suppler);//SupplierRepo.update(suppler);
+                    boolean isSaved = supplierBO.updateSupplier(suppler);
                     if (isSaved) {
                         new Alert(Alert.AlertType.CONFIRMATION, "supplier update!").show();
                         clearFields();
@@ -206,7 +204,7 @@ public class SupplierFormController {
             String id = txtSupId.getText();
 
             try {
-                boolean isDeleted = supplierBO.deleteSupplier(id);//SupplierRepo.delete(id);
+                boolean isDeleted = supplierBO.deleteSupplier(id);
                 if (isDeleted) {
                     new Alert(Alert.AlertType.CONFIRMATION, "supplier deleted!").show();
                     clearFields();
@@ -224,9 +222,7 @@ public class SupplierFormController {
         String nextId = "";
 
         try {
-            String currentId = "";//SupplierRepo.getLastId();
-
-            nextId = supplierBO.generateNewID();//generateNextId(currentId);
+            nextId = supplierBO.generateNewID();
             txtSupId.setText(nextId);
 
         } catch (SQLException e) {
@@ -237,27 +233,11 @@ public class SupplierFormController {
         return nextId;
     }
 
-    private String generateNextId(String currentId) {
-        if(currentId != null) {
-            String[] split = currentId.split("S");  //" ", "2"
-            int idNum = Integer.parseInt(split[1]);
-
-            if(idNum >= 1){
-                return "S" + 0 + 0 + ++idNum;
-            }else if(idNum >= 9){
-                return "S" + 0 + ++idNum;
-            } else if(idNum >= 99){
-                return "S" + ++idNum;
-            }
-        }
-        return "S001";
-    }
-
     public void supplierCompanyName() {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> nameList = supplierBO.getSupplierName();//SupplierRepo.getName();
+            List<String> nameList = supplierBO.getSupplierName();
 
             for (String name : nameList) {
                 obList.add(name);
@@ -285,7 +265,7 @@ public class SupplierFormController {
     public void btnSearchSupplierOnAction()  throws SQLException,ClassNotFoundException {
         String name = txtSearchSupplier.getText();
 
-        SupplierDTO supplier = supplierBO.searchByNameSupplier(name);//SupplierRepo.searchByName(name);
+        SupplierDTO supplier = supplierBO.searchByNameSupplier(name);
         if (supplier != null) {
             txtSupId.setText(supplier.getSupId());
             txtCompanyName.setText(supplier.getCompanyName());

@@ -1,17 +1,11 @@
 package lk.ijse.chama.bo.custom;
 
 import lk.ijse.chama.bo.SuperBO;
-import lk.ijse.chama.db.DbConnection;
 import lk.ijse.chama.dto.ItemDTO;
 import lk.ijse.chama.dto.ItemSupplierDetailDTO;
 import lk.ijse.chama.dto.SupplierDTO;
-import lk.ijse.chama.entity.Item;
-import lk.ijse.chama.entity.ItemSupplierDetail;
 import lk.ijse.chama.entity.OrderDetail;
-import lk.ijse.chama.repository.BrandNewItemRepo;
-import lk.ijse.chama.repository.ItemSupplierDetailRepo;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

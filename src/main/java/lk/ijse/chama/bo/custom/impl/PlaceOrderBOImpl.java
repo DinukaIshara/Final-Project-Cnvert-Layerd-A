@@ -78,6 +78,14 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
     }
 
     @Override
+    public ItemSupplierDetailDTO searchItemSuppliers(String id) throws SQLException, ClassNotFoundException {
+        ItemSupplierDetail itemSupplierss = itemSupplierDetailDAO.search(id);
+        ItemSupplierDetailDTO itemSupplierDetailDTO = new ItemSupplierDetailDTO(itemSupplierss.getItemId(),itemSupplierss.getSupId(),itemSupplierss.getQty(),itemSupplierss.getUnitPrice());
+
+        return itemSupplierDetailDTO;
+    }
+
+    @Override
     public boolean purchaseOrder(OrderDTO orderDTO, List<OrderDetailDTO> orderDetails) throws Exception {
         Connection connection = DbConnection.getInstance().getConnection();
         connection.setAutoCommit(false);

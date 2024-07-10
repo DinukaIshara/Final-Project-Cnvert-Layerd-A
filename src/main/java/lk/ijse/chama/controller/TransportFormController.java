@@ -12,13 +12,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.chama.bo.BOFactory;
 import lk.ijse.chama.bo.custom.TransportBO;
+import lk.ijse.chama.dto.LocationDTO;
 import lk.ijse.chama.dto.TransportDTO;
-import lk.ijse.chama.entity.Location;
 import lk.ijse.chama.entity.Transport;
-import lk.ijse.chama.entity.tm.TransportTm;
-import lk.ijse.chama.repository.LocationRepo;
-import lk.ijse.chama.repository.TransportRepo;
 import lk.ijse.chama.util.validation.Regex;
+import lk.ijse.chama.view.tdm.tm.TransportTm;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.sql.SQLException;
@@ -99,7 +97,7 @@ public class TransportFormController {
         ObservableList<TransportTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<TransportDTO> transportList = transportBO.getAllTransport();//TransportRepo.getAll();
+            List<TransportDTO> transportList = transportBO.getAllTransport();
             for (TransportDTO transport : transportList) {
                 TransportTm tm = new TransportTm(
                         transport.getTrId(),
@@ -133,7 +131,7 @@ public class TransportFormController {
         //if(isValidate()) {
         try {
 
-                boolean isSaved = transportBO.saveTransport(transport);//TransportRepo.save(transport);
+                boolean isSaved = transportBO.saveTransport(transport);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Transport saved!").show();
                     clearFields();
@@ -167,7 +165,7 @@ public class TransportFormController {
 
             try {
                 //if(isValidate()) {
-                boolean isSaved = transportBO.updateTransport(transport);//TransportRepo.update(transport);
+                boolean isSaved = transportBO.updateTransport(transport);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Transport updated!").show();
                     clearFields();
@@ -195,7 +193,7 @@ public class TransportFormController {
             String id = txtId.getText();
 
             try {
-                boolean isDeleted = transportBO.deleteTransport(id);//TransportRepo.delete(id);
+                boolean isDeleted = transportBO.deleteTransport(id);
                 if (isDeleted) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Transport deleted!").show();
                     clearFields();
@@ -227,9 +225,8 @@ public class TransportFormController {
         String nextId = "";
 
         try {
-            String currentId = "";TransportRepo.getLastId();
 
-            nextId = transportBO.generateNewID();//generateNextId(currentId);
+            nextId = transportBO.generateNewID();
             txtId.setText(nextId);
 
         } catch (SQLException e) {
@@ -240,27 +237,11 @@ public class TransportFormController {
         return nextId;
     }
 
-    private String generateNextId(String currentId) {
-        if(currentId != null) {
-            String[] split = currentId.split("T");  //" ", "2"
-            int idNum = Integer.parseInt(split[1]);
-
-            if(idNum >= 1){
-                return "T" + 0 + 0 + ++idNum;
-            }else if(idNum >= 9){
-                return "T" + 0 + ++idNum;
-            } else if(idNum >= 99){
-                return "T" + ++idNum;
-            }
-        }
-        return "T001";
-    }
-
     public void getPlaces(){  // Location Table place get
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> placeList = transportBO.getPlace();//LocationRepo.getPlace();
+            List<String> placeList = transportBO.getPlace();
 
             for(String place : placeList) {
                 obList.add(place);
@@ -277,9 +258,9 @@ public class TransportFormController {
 
     public MapView crateMapView() throws SQLException, ClassNotFoundException {
         MapView mapView = new MapView();
-        List<String> validLocations = transportBO.getPlace();//LocationRepo.getPlace();
+        List<String> validLocations = transportBO.getPlace();
         if (validLocations.contains(txtLocation.getText())) {
-            Location location = LocationRepo.searchByPath(txtLocation.getText());
+            LocationDTO location = transportBO.searchByPath(txtLocation.getText());
             System.out.println(location.getLatitude());
             System.out.println(location.getLongitude());
             eiffelPoint = new MapPoint(location.getLatitude(), location.getLongitude());
@@ -316,7 +297,7 @@ public class TransportFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> locationList = transportBO.getlocation();//TransportRepo.getlocation();
+            List<String> locationList = transportBO.getlocation();
 
             for (String location : locationList) {
                 obList.add(location);
@@ -333,7 +314,7 @@ public class TransportFormController {
     public void btnSearchLocationOnAction() throws SQLException, ClassNotFoundException {
         String location = txtSearchLocation.getText();
 
-        Transport tr = transportBO.searchByLocation(location);//TransportRepo.searchByLocation(location);
+        Transport tr = transportBO.searchByLocation(location);
         if (tr != null) {
             txtId.setText(tr.getTrId());
             txtVehicalNo.setText(tr.getVehicalNo());

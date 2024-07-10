@@ -18,8 +18,8 @@ import lk.ijse.chama.bo.custom.PlaceItemBO;
 import lk.ijse.chama.dto.ItemDTO;
 import lk.ijse.chama.dto.ItemSupplierDetailDTO;
 import lk.ijse.chama.dto.SupplierDTO;
-import lk.ijse.chama.entity.tm.BrandNewItemTm;
 import lk.ijse.chama.util.validation.Regex;
+import lk.ijse.chama.view.tdm.tm.ItemTm;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.io.File;
@@ -29,7 +29,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public class BrandNewItemFormController {
+public class ItemFormController {
 
     @FXML
     private TextField txtCategory;
@@ -132,13 +132,13 @@ public class BrandNewItemFormController {
     }
 
     private void loadAllItems() {
-        ObservableList<BrandNewItemTm> obList = FXCollections.observableArrayList();
+        ObservableList<ItemTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<ItemDTO> itemList = placeItemBO.getAllItems();//BrandNewItemRepo.getAll();
-            List<ItemSupplierDetailDTO> supplierDetail = placeItemBO.getAllItemSupplierDetail();//ItemSupplierDetailRepo.getAll();
-            List<SupplierDTO> suppliers = placeItemBO.getAllSuppliers();//SupplierRepo.getAll();
-            BrandNewItemTm tm;
+            List<ItemDTO> itemList = placeItemBO.getAllItems();
+            List<ItemSupplierDetailDTO> supplierDetail = placeItemBO.getAllItemSupplierDetail();
+            List<SupplierDTO> suppliers = placeItemBO.getAllSuppliers();
+            ItemTm tm;
                 for(ItemSupplierDetailDTO itemSupplier : supplierDetail) {
                     String item_name = null;
                     String item_category = null;
@@ -161,7 +161,7 @@ public class BrandNewItemFormController {
                     }
 
 
-                    tm = new BrandNewItemTm(
+                    tm = new ItemTm(
                         itemSupplier.getItemId(),
                         item_name,
                         item_category,
@@ -204,10 +204,8 @@ public class BrandNewItemFormController {
         var itemSupplier = new ItemSupplierDetailDTO(itemId,supId,handOnQty,unitPrice);
 
         try {
-            //new SaveBrandNewItem(item, itemSupplier);
-
             if(isValied()) {
-                boolean isPlaced = placeItemBO.palceItem(item, itemSupplier);//SaveBrandNewItemRepo.saveBrandNewItem(si);
+                boolean isPlaced = placeItemBO.palceItem(item, itemSupplier);
                 if (isPlaced) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Save Item!").show();
                     clearFields();
@@ -252,10 +250,9 @@ public class BrandNewItemFormController {
 
             var itemSupplier = new ItemSupplierDetailDTO(itemId, supId, handOnQty, unitPrice);
 
-            //SaveBrandNewItem si = new SaveBrandNewItem(item, itemSupplier);
             try {
                 if (isValied()) {
-                    boolean isPlaced = placeItemBO.updateItem(item, itemSupplier);//SaveBrandNewItemRepo.updateBrandNewItem(si);
+                    boolean isPlaced = placeItemBO.updateItem(item, itemSupplier);
                     if (isPlaced) {
                         new Alert(Alert.AlertType.CONFIRMATION, "Update Item!").show();
                         clearFields();
@@ -308,7 +305,7 @@ public class BrandNewItemFormController {
             String id = txtItemId.getText();
 
             try {
-                boolean isItemDeleted = placeItemBO.deleteItem(id);//BrandNewItemRepo.delete(id);
+                boolean isItemDeleted = placeItemBO.deleteItem(id);
                 if (isItemDeleted) {
                     new Alert(Alert.AlertType.CONFIRMATION, "item deleted!").show();
                     clearFields();
@@ -326,9 +323,7 @@ public class BrandNewItemFormController {
         String nextId = "";
 
         try {
-            String currentId = "";//BrandNewItemRepo.getLastId();
-
-            nextId = placeItemBO.generateNewID();//generateNextOrderId(currentId);
+            nextId = placeItemBO.generateNewID();
             txtItemId.setText(nextId);
 
         } catch (SQLException e) {
@@ -337,22 +332,6 @@ public class BrandNewItemFormController {
             throw new RuntimeException(e);
         }
         return nextId;
-    }
-
-    private String generateNextOrderId(String currentId) {
-        if(currentId != null) {
-            String[] split = currentId.split("I");  //" ", "2"
-            int idNum = Integer.parseInt(split[1]);
-
-            if(idNum >= 0){
-                return "I" + 00 + ++idNum;
-            }else if(idNum >= 9){
-                return "I" + 0 + ++idNum;
-            } else if(idNum >= 99){
-                return "I" + ++idNum;
-            }
-        }
-        return "I001";
     }
 
     private void getType() {
@@ -435,7 +414,7 @@ public class BrandNewItemFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> idList = placeItemBO.getSupplierId();//SupplierRepo.getId();
+            List<String> idList = placeItemBO.getSupplierId();
 
             for(String id : idList) {
                 obList.add(id);
@@ -463,9 +442,9 @@ public class BrandNewItemFormController {
     public void btnSearchItemNameOnAction() throws SQLException,ClassNotFoundException {
         String name = txtSearchItemName.getText();
 
-        ItemDTO item = placeItemBO.searchItemByName(name);//BrandNewItemRepo.searchByName(name);
-        ItemSupplierDetailDTO isd = placeItemBO.searchItemSupplierDetail(item.getItemId());//ItemSupplierDetailRepo.searchById(item.getItemId());
-        SupplierDTO supplier = placeItemBO.searchByIdSupplier(isd.getSupId());//SupplierRepo.searchById(isd.getSupId());
+        ItemDTO item = placeItemBO.searchItemByName(name);
+        ItemSupplierDetailDTO isd = placeItemBO.searchItemSupplierDetail(item.getItemId());
+        SupplierDTO supplier = placeItemBO.searchByIdSupplier(isd.getSupId());
 
         if (item != null) {
             txtItemId.setText(item.getItemId());
@@ -497,7 +476,7 @@ public class BrandNewItemFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> telList = placeItemBO.getItemName();//BrandNewItemRepo.getName();
+            List<String> telList = placeItemBO.getItemName();
 
             for (String tel : telList) {
                 obList.add(tel);
@@ -562,7 +541,7 @@ public class BrandNewItemFormController {
 
         SupplierDTO supplier;
         try {
-            supplier = placeItemBO.searchByIdSupplier(id);//SupplierRepo.searchById(id);
+            supplier = placeItemBO.searchByIdSupplier(id);
 
             lblSupCompanyName.setText(supplier.getCompanyName());
 
@@ -591,12 +570,6 @@ public class BrandNewItemFormController {
         if(!Regex.setTextColor(lk.ijse.chama.util.validation.TextField.IID,txtItemId))return false;
         if (!Regex.setTextColor(lk.ijse.chama.util.validation.TextField.QTY,txtQty)) return false;
         if (!Regex.setTextColor(lk.ijse.chama.util.validation.TextField.PRICE,txtUnitPrice)) return false;
-        return true;
-    }
-
-    public boolean isIdValidate(){
-        if(!Regex.setTextColor(lk.ijse.chama.util.validation.TextField.IID,txtItemId)) return false;
-
         return true;
     }
 }

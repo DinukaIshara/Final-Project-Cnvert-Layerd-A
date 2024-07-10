@@ -15,11 +15,9 @@ import lk.ijse.chama.bo.custom.RepairBO;
 import lk.ijse.chama.db.DbConnection;
 import lk.ijse.chama.dto.CustomerDTO;
 import lk.ijse.chama.dto.RepairDTO;
-import lk.ijse.chama.entity.*;
-import lk.ijse.chama.entity.tm.RepairTm;
-import lk.ijse.chama.repository.CustomerRepo;
 import lk.ijse.chama.entity.Repair;
 import lk.ijse.chama.util.validation.Regex;
+import lk.ijse.chama.view.tdm.tm.RepairTm;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -113,7 +111,7 @@ public class RepairFormController {
         ObservableList<Repair> obList = FXCollections.observableArrayList();
 
         try {
-            List<RepairDTO> repairList = repairBO.getAllRepair();//RepairRepo.getAll();
+            List<RepairDTO> repairList = repairBO.getAllRepair();
             for (RepairDTO repair : repairList) {
                 RepairTm tm = new RepairTm(
                         repair.getRepairId(),
@@ -151,7 +149,7 @@ public class RepairFormController {
 
         try {
             if(isValidate()) {
-                boolean isPlaced = repairBO.saveRepair(repair);//RepairRepo.save(repair);
+                boolean isPlaced = repairBO.saveRepair(repair);
                 if (isPlaced) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Save Repair!").show();
                     clearFields();
@@ -189,7 +187,7 @@ public class RepairFormController {
 
             try {
                 if (isValidate()) {
-                    boolean isPlaced = repairBO.updateRepair(repair);//RepairRepo.update(repair);
+                    boolean isPlaced = repairBO.updateRepair(repair);
                     if (isPlaced) {
                         new Alert(Alert.AlertType.CONFIRMATION, "Update Repair!").show();
                         initialize();
@@ -219,7 +217,7 @@ public class RepairFormController {
             String id = txtRepairId.getText();
 
             try {
-                boolean isDeleted = repairBO.deleteRepair(id); //RepairRepo.delete(id);
+                boolean isDeleted = repairBO.deleteRepair(id);
                 if (isDeleted) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Repair deleted!").show();
                     clearFields();
@@ -255,9 +253,7 @@ public class RepairFormController {
         String nextId = "";
 
         try {
-            String currentId = "";//repairBO.getRepairLastId();//RepairRepo.getLastId();
-
-            nextId = repairBO.generateNewID();//generateNextId(currentId);
+            nextId = repairBO.generateNewID();
             txtRepairId.setText(nextId);
 
         } catch (SQLException e) {
@@ -279,7 +275,7 @@ public class RepairFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> idList = repairBO.getRepairId();//RepairRepo.getId();
+            List<String> idList = repairBO.getRepairId();
 
             for (String id : idList) {
                 obList.add(id);
@@ -297,7 +293,7 @@ public class RepairFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> telList = customerBO.getCustomerTel();//CustomerRepo.getTel();
+            List<String> telList = customerBO.getCustomerTel();
 
             for(String tel : telList) {
                 obList.add(tel);
@@ -314,7 +310,7 @@ public class RepairFormController {
     public void txtCustomerTelOnAction(ActionEvent actionEvent) {
         String tel = txtCustomerTel.getText();
         try {
-            CustomerDTO customer = customerBO.searchCustomer(tel);//CustomerRepo.searchByTel(tel);
+            CustomerDTO customer = customerBO.searchCustomer(tel);
 
             lblCustomerName.setText(customer.getCName());
             lblCustomerId.setText(customer.getCustId());
@@ -341,12 +337,13 @@ public class RepairFormController {
     public void btnSearchRepairOnAction() throws SQLException, ClassNotFoundException {
         String id = txtSearchRepair.getText();
 
-        RepairDTO rep = repairBO.searchRepair(id);//RepairRepo.searchById(String.valueOf(id));
+        RepairDTO rep = repairBO.searchRepair(id);
         if (rep != null) {
             txtRepairId.setText(rep.getRepairId());
             lblCustomerId.setText(rep.getCustId());
             txtItemName.setText(rep.getItemName());
-            Customer cust = CustomerRepo.searchById(rep.getCustId());
+            System.out.println(rep.getCustId());
+            CustomerDTO cust = customerBO.searchByCustomerId(rep.getCustId());
             if (cust != null) {
                 txtCustomerTel.setText(cust.getContactNo());
                 lblCustomerName.setText(cust.getCName());

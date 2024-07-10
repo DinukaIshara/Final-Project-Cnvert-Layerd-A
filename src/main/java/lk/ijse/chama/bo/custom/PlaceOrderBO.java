@@ -21,11 +21,13 @@ public interface PlaceOrderBO extends SuperBO {
 
     String generateOrderID() throws SQLException, ClassNotFoundException ;
 
-    public ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException;
+    ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException;
 
-    public ArrayList<ItemDTO> getAllItem() throws SQLException, ClassNotFoundException;
+    ArrayList<ItemDTO> getAllItem() throws SQLException, ClassNotFoundException;
 
-    public ArrayList<ItemSupplierDetailDTO> getItemSupplierDetaiAll() throws SQLException, ClassNotFoundException ;
+    ArrayList<ItemSupplierDetailDTO> getItemSupplierDetaiAll() throws SQLException, ClassNotFoundException ;
+
+    ItemSupplierDetailDTO searchItemSuppliers(String id) throws SQLException, ClassNotFoundException;
 
     List<String> getlocation() throws SQLException,ClassNotFoundException;
 

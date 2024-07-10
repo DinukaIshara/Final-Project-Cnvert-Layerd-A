@@ -23,8 +23,7 @@ import lk.ijse.chama.util.QrReader;
 import lk.ijse.chama.util.SendMail;
 import lk.ijse.chama.db.DbConnection;
 import lk.ijse.chama.entity.*;
-import lk.ijse.chama.entity.tm.CartTm;
-import lk.ijse.chama.repository.*;
+import lk.ijse.chama.view.tdm.tm.CartTm;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -245,7 +244,7 @@ public class PlaceOrderFormController {
 
         for (int i = 0; i < tblOrder.getItems().size(); i++) {
             CartTm tm = obList.get(i);
-            item = placeOrderBO.searchItem(tm.getItemName());//BrandNewItemRepo.searchByName(tm.getItemName());
+            item = placeOrderBO.searchItem(tm.getItemName());
 
             OrderDetailDTO od = new OrderDetailDTO(
                     orderId,
@@ -257,9 +256,8 @@ public class PlaceOrderFormController {
             odList.add(od);
         }
 
-        //PlaceOrder po = new PlaceOrder(order, odList);
         try {
-            boolean isPlaced = placeOrderBO.purchaseOrder(order,odList);//PlaceOrderRepo.placeOrder(po);
+            boolean isPlaced = placeOrderBO.purchaseOrder(order,odList);
             if (isPlaced) {
                 getLastOrderId();
                 new Alert(Alert.AlertType.CONFIRMATION, "Order Placed!").show();
@@ -272,7 +270,7 @@ public class PlaceOrderFormController {
 
     private List<ItemCard> getData(){ // Load All Item Data in ItemCard
         try {
-            List<ItemSupplierDetailDTO> supplierDetail = placeOrderBO.getItemSupplierDetaiAll();//ItemSupplierDetailRepo.getAll();
+            List<ItemSupplierDetailDTO> supplierDetail = placeOrderBO.getItemSupplierDetaiAll();
             for(ItemSupplierDetailDTO itemSupplier : supplierDetail) {
 
                 String item_name = null;
@@ -391,7 +389,7 @@ public class PlaceOrderFormController {
     private void getItemName() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<String> codeList = placeOrderBO.getItemName();//BrandNewItemRepo.getName();
+            List<String> codeList = placeOrderBO.getItemName();
 
             for (String code : codeList) {
                 obList.add(code);
@@ -425,7 +423,7 @@ public class PlaceOrderFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> telList = placeOrderBO.getCustomerTel();//CustomerRepo.getTel();
+            List<String> telList = placeOrderBO.getCustomerTel();
 
             for(String tel : telList) {
                 obList.add(tel);
@@ -439,21 +437,10 @@ public class PlaceOrderFormController {
         }
     }
 
-    private String generateNextOrderId(String currentId) {
-        if(currentId != null) {
-            String[] split = currentId.split("O");  //" ", "2"
-            int idNum = Integer.parseInt(split[1]);
-            return "O" + ++idNum;
-        }
-        return "O1";
-    }
-
     private String getCurrentOrderId() {
         String nextOrderId = "";
 
         try {
-            //String currentId = ;//OrderRepo.getLastOId();
-
             nextOrderId = placeOrderBO.generateOrderID();
             lblOrderCode.setText(nextOrderId);
 
@@ -470,7 +457,7 @@ public class PlaceOrderFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> locationList = placeOrderBO.getlocation();//TransportRepo.getLoca();
+            List<String> locationList = placeOrderBO.getlocation();
 
             for(String location : locationList) {
                 obList.add(location);
@@ -509,7 +496,7 @@ public class PlaceOrderFormController {
         String tel = txtCustomerTel.getText();
 
         try {
-            CustomerDTO customer = placeOrderBO.searchCustomer(tel);//CustomerRepo.searchByTel(tel);
+            CustomerDTO customer = placeOrderBO.searchCustomer(tel);
 
             lblCustName.setText(customer.getCName());
             lblCustomerId.setText(customer.getCustId());
@@ -532,8 +519,8 @@ public class PlaceOrderFormController {
         String name = txtItemNameSearch.getText();
 
         try {
-            ItemDTO item = placeOrderBO.searchItem(name);//BrandNewItemRepo.searchByName(name);
-            ItemSupplierDetail itemDetail = ItemSupplierDetailRepo.searchById(item.getItemId());
+            ItemDTO item = placeOrderBO.searchItem(name);
+            ItemSupplierDetailDTO itemDetail = placeOrderBO.searchItemSuppliers(item.getItemId());
             if(item != null) {
                 lblItemName.setText(item.getName());
                 lblItemId.setText(item.getItemId());
@@ -557,7 +544,7 @@ public class PlaceOrderFormController {
         String location = txtLocation.getText();
 
         try {
-            Transport tr = placeOrderBO.searchByLocation(location);//TransportRepo.searchByLoca(location);
+            Transport tr = placeOrderBO.searchByLocation(location);
             if(tr != null) {
                 lblTrId.setText(tr.getTrId());
                 lblTransportCost.setText(String.valueOf(tr.getCost()));
@@ -598,7 +585,7 @@ public class PlaceOrderFormController {
         double netTotal = 0.0;
         try {
             System.out.println(getLastOrderId());
-            netTotal = placeOrderBO.getNetTot(getLastOrderId());//OrderRepo.getNetTot(getLastOrderId());
+            netTotal = placeOrderBO.getNetTot(getLastOrderId());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -610,7 +597,7 @@ public class PlaceOrderFormController {
     private String getLastOrderId(){
         String orderId;
         try {
-            orderId = placeOrderBO.getLastOrderId();//OrderRepo.getLastOId();
+            orderId = placeOrderBO.getLastOrderId();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {

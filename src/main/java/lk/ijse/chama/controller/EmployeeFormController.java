@@ -17,11 +17,9 @@ import lk.ijse.chama.dto.EmployeeDTO;
 import lk.ijse.chama.util.QrGenerateor;
 import lk.ijse.chama.util.QrReader;
 import lk.ijse.chama.db.DbConnection;
-import lk.ijse.chama.entity.Employee;
 import lk.ijse.chama.entity.QrResult;
-import lk.ijse.chama.entity.tm.EmployeeTm;
-import lk.ijse.chama.repository.EmployeeRepo;
 import lk.ijse.chama.util.validation.Regex;
+import lk.ijse.chama.view.tdm.tm.EmployeeTm;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -140,7 +138,7 @@ public class EmployeeFormController {
         ObservableList<EmployeeTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<EmployeeDTO> employeeList = employeeBO.getAllEmployee();//EmployeeRepo.getAll();
+            List<EmployeeDTO> employeeList = employeeBO.getAllEmployee();
             for (EmployeeDTO employee : employeeList) {
                 EmployeeTm tm = new EmployeeTm(
                         employee.getEmpId(),
@@ -183,7 +181,7 @@ public class EmployeeFormController {
 
         try {
             if(isValidate()) {
-                boolean isSaved = employeeBO.saveEmployee(employee);//EmployeeRepo.save(employee);
+                boolean isSaved = employeeBO.saveEmployee(employee);
                 if (isSaved) {
                     QrGenerateor.setData(id, email, 3);
                     new Alert(Alert.AlertType.CONFIRMATION, "Employee saved!").show();
@@ -224,7 +222,7 @@ public class EmployeeFormController {
 
             try {
                 if (isValidate()) {
-                    boolean isUpdated = employeeBO.updateEmployee(employee); //EmployeeRepo.update(employee);
+                    boolean isUpdated = employeeBO.updateEmployee(employee);
                     if (isUpdated) {
                         new Alert(Alert.AlertType.CONFIRMATION, "Employee updated!").show();
                         initialize();
@@ -252,7 +250,7 @@ public class EmployeeFormController {
             String id = txtId.getText();
 
             try {
-                boolean isDeleted = employeeBO.deleteEmployee(id);//EmployeeRepo.delete(id); // Delete Employee Data
+                boolean isDeleted = employeeBO.deleteEmployee(id);// Delete Employee Data
                 if (isDeleted) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Employee deleted!").show();
                     clearFields();
@@ -290,9 +288,7 @@ public class EmployeeFormController {
         String nextId = "";
 
         try {
-            String currentId = "";//EmployeeRepo.getLastId();
-
-            nextId = employeeBO.generateNewID();//generateNextId(currentId);
+            nextId = employeeBO.generateNewID();
             txtId.setText(nextId);
 
         } catch (SQLException e) {
@@ -301,22 +297,6 @@ public class EmployeeFormController {
             throw new RuntimeException(e);
         }
         return nextId;
-    }
-
-    private String generateNextId(String currentId) {
-        if(currentId != null) {
-            String[] split = currentId.split("E");  //" ", "2"
-            int idNum = Integer.parseInt(split[1]);
-
-            if(idNum >= 1){
-                return "E" + 0 + 0 + ++idNum;
-            }else if(idNum >= 9){
-                return "E" + 0 + ++idNum;
-            } else if(idNum >= 99){
-                return "E" + ++idNum;
-            }
-        }
-        return "E001";
     }
 
     public void btnImportImgOnAction() { // Search Image Path in Your PC
@@ -335,7 +315,7 @@ public class EmployeeFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> telList = employeeBO.getEmployeeId();//EmployeeRepo.getId();
+            List<String> telList = employeeBO.getEmployeeId();
 
             for(String tel : telList) {
                 obList.add(tel);
@@ -362,7 +342,7 @@ public class EmployeeFormController {
     public void btnSearchEmployeeOnAction() throws SQLException, ClassNotFoundException { // Search Employees
         String tel = txtSearchEmployee.getText();
 
-        EmployeeDTO emp = employeeBO.searchEmployee(tel);//EmployeeRepo.searchById(String.valueOf(tel)); // Search Employees In Employee Id
+        EmployeeDTO emp = employeeBO.searchEmployee(tel); // Search Employees In Employee Id
         if (emp != null) {
             txtId.setText(emp.getEmpId());
             txtName.setText(emp.getEmpName());

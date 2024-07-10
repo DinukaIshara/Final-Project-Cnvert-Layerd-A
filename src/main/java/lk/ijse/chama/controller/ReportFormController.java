@@ -7,11 +7,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.chama.bo.BOFactory;
+import lk.ijse.chama.bo.custom.ReportBO;
 import lk.ijse.chama.util.QrReader;
 import lk.ijse.chama.db.DbConnection;
 import lk.ijse.chama.entity.QrResult;
-import lk.ijse.chama.repository.BrandNewItemRepo;
-import lk.ijse.chama.repository.CustomerRepo;
 import lk.ijse.chama.util.validation.Regex;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
@@ -30,6 +30,8 @@ public class ReportFormController {
     private TextField txtSearchItemStockDate;
     @FXML
     private TextField txtSearchCustomerTel;
+
+    ReportBO reportBO = (ReportBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.REPORTBO);
 
     public ReportFormController(){
         qrResultModel = new QrResult();
@@ -103,7 +105,7 @@ public class ReportFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<String> telList = CustomerRepo.getTel();
+            List<String> telList = reportBO.getCustomerTel();
 
             for(String tel : telList) {
                 obList.add(tel);
@@ -112,12 +114,14 @@ public class ReportFormController {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
     private void getItemDate() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<String> dateList = BrandNewItemRepo.getDate();
+            List<String> dateList = reportBO.getItemDate();
 
             for (String date : dateList) {
                 obList.add(date);
@@ -125,6 +129,8 @@ public class ReportFormController {
             TextFields.bindAutoCompletion(txtSearchItemStockDate,obList);
 
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

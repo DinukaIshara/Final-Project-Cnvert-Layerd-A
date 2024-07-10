@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class BrandNewItemTm {
+public class ItemTm {
     private String itemId;
     private String name;
     private String category;

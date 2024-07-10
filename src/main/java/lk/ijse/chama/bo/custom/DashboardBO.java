@@ -2,15 +2,11 @@ package lk.ijse.chama.bo.custom;
 
 import javafx.scene.chart.XYChart;
 import lk.ijse.chama.bo.SuperBO;
-import lk.ijse.chama.dao.SQLUtill;
 import lk.ijse.chama.dto.CustomDTO;
 import lk.ijse.chama.dto.CustomerDTO;
 import lk.ijse.chama.dto.ItemDTO;
 import lk.ijse.chama.dto.OrderDTO;
-import lk.ijse.chama.entity.Custom;
-import lk.ijse.chama.entity.tm.MostSellItemTm;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
